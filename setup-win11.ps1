@@ -28,7 +28,13 @@
 ##########################################
 
 # TaskBar to left
-Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "TaskbarAl" -Value "0" -Property Dword
+Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "TaskbarAl" -Value "0" -Type Dword
+
+# old ALT+TAB-experience
+New-Item -Path "HKCU:\Software\Policies\Microsoft\Windows" -Name Explorer
+
+Explorer
+Set-ItemProperty -Path "HKCU:\Software\Policies\Microsoft\Windows\Explorer" -Name "MultiTaskingAltTabFilter" -Value "4" -Type Dword
 
 # PowerSettings (no screen-off, no hdd-power-down, ...)
 POWERCFG -DUPLICATESCHEME 381b4222-f694-41f0-9685-ff5bb260df2e 4e1057d0-8012-4889-b988-99f26bfb9415
