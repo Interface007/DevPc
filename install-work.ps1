@@ -58,6 +58,7 @@ choco install everything                        # (free) filename search
 choco install xmind-2020                        # (paid) mindmapping
 choco install beyondcompare                     # (paid) takes comparison of folders and files to a new level
 choco install boxcryptor                        # (paid) need to keep some content secret in the cloud
+choco install screamingfrog                     # (paid) website SEO spider
 
 # software development and business
 choco install git                               # version control
