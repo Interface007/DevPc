@@ -32,8 +32,6 @@ Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer
 
 # old ALT+TAB-experience
 New-Item -Path "HKCU:\Software\Policies\Microsoft\Windows" -Name Explorer
-
-Explorer
 Set-ItemProperty -Path "HKCU:\Software\Policies\Microsoft\Windows\Explorer" -Name "MultiTaskingAltTabFilter" -Value "4" -Type Dword
 
 # PowerSettings (no screen-off, no hdd-power-down, ...)
