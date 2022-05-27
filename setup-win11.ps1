@@ -46,3 +46,6 @@ POWERCFG -CHANGE -standby-timeout-ac 0      # don't go into standby automaticall
 POWERCFG -CHANGE -standby-timeout-dc 0      # don't go into standby automatically - I will tell you when to switch off
 POWERCFG -CHANGE -hibernate-timeout-ac 0    # don't hibernate automatically - I will tell you when to sleep
 POWERCFG -CHANGE -hibernate-timeout-dc 0    # don't hibernate automatically - I will tell you when to sleep
+
+# Turn on network protection
+Set-MpPreference -EnableNetworkProtection Enabled
