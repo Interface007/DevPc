@@ -68,7 +68,6 @@ choco install resharper-ultimate-all            # tooling for efficient C# codin
 choco install sql-server-management-studio      # database development with MS SQL Server needs this
 choco install keepass                           # keep the secrets secret
 choco install dellcommandupdate                 # for DELL laptops a must have
-choco install vmware-horizon-client             # some use this desktop virtualization
 choco install postman                           # (free) create and manage REST-API-calls
 choco install nodejs                            # (free) Node.js - open-source, cross-platform, back-end JavaScript runtime environment
 choco install powershell-core                   # (free) open shouce shell
@@ -77,5 +76,7 @@ choco install microsoft-teams                   # (subs) will install for curren
 choco install googlechrome                      # (free) browser based on Chromium
 choco install firefox                           # (free) browser based on Gecko
 choco install safari                            # (free) browser based on WebKit
+choco install citrix-workspace                  # (free) needed for some remote work scenarios
+choco install vmware-horizon-client             # (free) some use this desktop virtualization
 
 choco install spotify                           # (free) need good music - this installer sometimes hangs at the end of the procedure - so I put it last
