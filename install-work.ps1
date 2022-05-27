@@ -58,7 +58,6 @@ choco install everything                        # (free) filename search
 choco install xmind-2020                        # (paid) mindmapping
 choco install beyondcompare                     # (paid) takes comparison of folders and files to a new level
 choco install boxcryptor                        # (paid) need to keep some content secret in the cloud
-choco install screamingfrog                     # (paid) website SEO spider
 
 # software development and business
 choco install git                               # version control
@@ -78,5 +77,6 @@ choco install firefox                           # (free) browser based on Gecko
 choco install safari                            # (free) browser based on WebKit
 choco install citrix-workspace                  # (free) needed for some remote work scenarios
 choco install vmware-horizon-client             # (free) some use this desktop virtualization
+choco install screamingfrog                     # (paid) website SEO spider
 
 choco install spotify                           # (free) need good music - this installer sometimes hangs at the end of the procedure - so I put it last
