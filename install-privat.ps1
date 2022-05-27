@@ -52,6 +52,8 @@ choco install gimp                              # (free) image editing
 choco install adobereader                       # (feee) PDF reader
 choco install 7zip                              # (free) handles most comression file formats
 choco install treesizefree                      # (free) analyzes where all the harddisk space has gone
+choco install microsoft-edge                    # (free) browser based on Chromium
+choco install everything                        # (free) filename search
 
 choco install xmind-2020                        # (paid) mindmapping
 choco install beyondcompare                     # (paid) takes comparison of folders and files to a new level
@@ -60,4 +62,5 @@ choco install boxcryptor                        # (paid) need to keep some conte
 # private use
 choco install obs-studio                        # (free) screen recording, management of cameras while production
 choco install reaper                            # (paid) audio recoding and production software
-choco install spotify                           # (free) need good music
+
+choco install spotify                           # (free) need good music - this installer sometimes hangs at the end of the procedure - so I put it last
