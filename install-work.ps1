@@ -74,7 +74,6 @@ choco install microsoft-teams.install           # (subs) will "install the insta
 choco install microsoft-teams                   # (subs) will install for current user
 choco install googlechrome                      # (free) browser based on Chromium
 choco install firefox                           # (free) browser based on Gecko
-choco install safari                            # (free) browser based on WebKit
 choco install citrix-workspace                  # (free) needed for some remote work scenarios
 choco install vmware-horizon-client             # (free) some use this desktop virtualization
 choco install screamingfrog                     # (paid) website SEO spider
