@@ -63,6 +63,7 @@ choco install boxcryptor                        # (paid) need to keep some conte
 choco install git                               # version control
 choco install vscode                            # Visual Studio Code
 choco install visualstudio2022enterprise        # Visual Studio 2022 Enterprise - still need to install components via VS installer GUI
+choco install azure-functions-core-tools        # tooling for AzureFfunctions
 choco install resharper-ultimate-all            # tooling for efficient C# coding - might be obsolete in the future, but currently it has a lot of great efficiency improvements
 choco install sql-server-management-studio      # database development with MS SQL Server needs this
 choco install keepass                           # keep the secrets secret
