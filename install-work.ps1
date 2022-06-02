@@ -55,6 +55,8 @@ choco install treesizefree                      # (free) analyzes where all the 
 choco install microsoft-edge                    # (free) browser based on Chromium
 choco install everything                        # (free) filename search
 
+choco install tailscale                         # (freemium) point-to-point-VPN
+
 choco install xmind-2020                        # (paid) mindmapping
 choco install beyondcompare                     # (paid) takes comparison of folders and files to a new level
 choco install boxcryptor                        # (paid) need to keep some content secret in the cloud
