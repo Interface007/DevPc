@@ -54,6 +54,7 @@ choco install 7zip                              # (free) handles most comression
 choco install treesizefree                      # (free) analyzes where all the harddisk space has gone
 choco install microsoft-edge                    # (free) browser based on Chromium
 choco install everything                        # (free) filename search
+choco install fiddler                           # (free) debugging proxy for http(s)
 
 choco install tailscale                         # (freemium) point-to-point-VPN
 
