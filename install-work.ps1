@@ -27,8 +27,21 @@
 # OTHER DEALINGS IN THE SOFTWARE.
 ##########################################
 
+# install "Redacted Regular" - unfortunately, this is not available through Chocolatey
+If((Test-Path "C:\Windows\Fonts\Redacted-Regular.ttf") -ne $True) {
+    $fileName = "$env:temp\Redacted-Regular.ttf"
+    Invoke-WebRequest -Uri "https://github.com/google/fonts/raw/main/ofl/redacted/Redacted-Regular.ttf" -OutFile $fileName
+
+    $objShell = New-Object -ComObject Shell.Application
+    $objFolder = $objShell.Namespace(0x14)
+    
+    $copyFlag = [String]::Format("{0:x}", 4 + 16);
+    $objFolder.CopyHere($fileName, $copyFlag)
+}
+
 Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
 
+# we don't want to manually confirm each and every installation
 choco feature enable -n allowGlobalConfirmation
 
 # scheduling daily upgrades of all software
