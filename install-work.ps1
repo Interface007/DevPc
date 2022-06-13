@@ -27,17 +27,38 @@
 # OTHER DEALINGS IN THE SOFTWARE.
 ##########################################
 
-# install "Redacted Regular" - unfortunately, this is not available through Chocolatey
-If((Test-Path "C:\Windows\Fonts\Redacted-Regular.ttf") -ne $True) {
-    $fileName = "$env:temp\Redacted-Regular.ttf"
-    Invoke-WebRequest -Uri "https://github.com/google/fonts/raw/main/ofl/redacted/Redacted-Regular.ttf" -OutFile $fileName
+# installation of fonts
+function Install-Font {
+    param (
+        $fontUrl,
+        $fontName
+    )
 
-    $objShell = New-Object -ComObject Shell.Application
-    $objFolder = $objShell.Namespace(0x14)
-    
-    $copyFlag = [String]::Format("{0:x}", 4 + 16);
-    $objFolder.CopyHere($fileName, $copyFlag)
+    # install "Redacted Regular + Script" - unfortunately, this is not available through Chocolatey
+    If((Test-Path "C:\Windows\Fonts\$fontName") -ne $True) {
+        Write-Output "downloading $fontName";
+        $fileName = "$env:temp\$fontName"
+        Invoke-WebRequest -Uri "$fontUrl/$fontName" -OutFile $fileName
+        Write-Output "... downloaded $fontName";
+
+        Write-Output "installing $fontName ...";
+        $objShell = New-Object -ComObject Shell.Application
+        $objFolder = $objShell.Namespace(0x14)
+        
+        $copyFlag = [String]::Format("{0:x}", 4 + 16);
+        $objFolder.CopyHere($fileName, $copyFlag)
+        
+        Remove-Item $fileName
+        Write-Output "... finished installing $fontName";
+    } else {
+        Write-Output "font $fontName skipped, because already installed";
+    }
 }
+
+Install-Font "https://github.com/google/fonts/raw/main/ofl/redacted"       "Redacted-Regular.ttf"
+Install-Font "https://github.com/google/fonts/raw/main/ofl/redactedscript" "RedactedScript-Bold.ttf"
+Install-Font "https://github.com/google/fonts/raw/main/ofl/redactedscript" "RedactedScript-Light.ttf"
+Install-Font "https://github.com/google/fonts/raw/main/ofl/redactedscript" "RedactedScript-Regular.ttf"
 
 Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
 
