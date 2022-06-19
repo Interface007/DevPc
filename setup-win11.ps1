@@ -49,3 +49,23 @@ POWERCFG -CHANGE -hibernate-timeout-dc 0    # don't hibernate automatically - I 
 
 # Turn on network protection
 Set-MpPreference -EnableNetworkProtection Enabled
+
+# harden
+  Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\Lsa"                           -Name "RunAsPPL"                    -Value 0x00000001 -Type Dword -Force -ea 'SilentlyContinue' # Enable 'Local Security Authority (LSA) protection'
+# Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System"      -Name "ConsentPromptBehaviorUser"   -Value 0x00000000 -Type Dword -Force -ea 'SilentlyContinue' # Set User Account Control (UAC) to automatically deny elevation requests
+  Set-ItemProperty -Path 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System'      -Name 'InactivityTimeoutSecs'       -Value 0x00000384 -Type DWORD -Force -ea 'SilentlyContinue' # set screen activity timer to 900 sec = 15 minutes
+  Set-ItemProperty -Path 'HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile'      -Name 'AllowLocalPolicyMerge'       -Value 0x00000000 -Type DWORD -Force -ea 'SilentlyContinue' # Disable merging of local Microsoft Defender Firewall rules with group policy firewall rules for the Public profile
+  Set-ItemProperty -Path 'HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile'      -Name 'AllowLocalIPsecPolicyMerge'  -Value 0x00000000 -Type DWORD -Force -ea 'SilentlyContinue' # Disable merging of local Microsoft Defender Firewall connection rules with group policy firewall rules for the Public profile
+# Set-ItemProperty -Path 'HKLM:\SOFTWARE\Policies\Microsoft\FVE'                                -Name 'MinimumPIN'                  -Value 0x00000006 -Type DWORD -Force -ea 'SilentlyContinue' # Set 'Minimum PIN length for startup' to '6 or more characters'
+  Set-ItemProperty -Path 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\Installer'                  -Name 'AlwaysInstallElevated'       -Value 0x00000000 -Type DWORD -Force -ea 'SilentlyContinue' # Disable 'Always install with elevated privileges'
+  Set-ItemProperty -Path 'HKLM:\SOFTWARE\Policies\Adobe\Acrobat Reader\DC\FeatureLockDown'      -Name 'bEnableFlash'                -Value 0x00000000 -Type DWORD -Force -ea 'SilentlyContinue' # Disable Flash on Adobe Reader DC
+  Set-ItemProperty -Path 'HKLM:\SOFTWARE\Policies\Adobe\Acrobat Reader\DC\FeatureLockDown'      -Name 'bDisableJavaScript'          -Value 0x00000000 -Type DWORD -Force -ea 'SilentlyContinue' # Disable JavaScript on Adobe Reader DC
+  Set-ItemProperty -Path 'HKLM:\SOFTWARE\Policies\Microsoft\Internet Explorer\Download'         -Name 'RunInvalidSignatures'        -Value 0x00000000 -Type DWORD -Force -ea 'SilentlyContinue' # Disable running or installing downloaded software with invalid signature
+# Set-ItemProperty -Path 'HKLM:\SOFTWARE\Policies\Microsoft Services\AdmPwd'                    -Name 'AdmPwdEnabled'               -Value 0x00000001 -Type DWORD -Force -ea 'SilentlyContinue' # Enable Local Admin password management
+  Set-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Control\Lsa'                           -Name 'RestrictAnonymous'           -Value 0x00000001 -Type DWORD -Force -ea 'SilentlyContinue' # Disable Anonymous enumeration of shares
+  Set-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Control\Lsa'                           -Name 'DisableDomainCreds'          -Value 0x00000001 -Type DWORD -Force -ea 'SilentlyContinue' # Disable the local storage of passwords and credentials
+
+  net accounts /minpwlen:14         # minimum password length = 14
+  net accounts /uniquepw:24         # password history of 24
+  net accounts /minpwage:1          # password must not be changed for one day
+  net accounts /lockoutthreshold:10 # lock out account after 10 wrong attempts
