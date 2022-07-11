@@ -109,8 +109,9 @@ choco install azure-cli                         # tooling for Azure
 choco install azure-functions-core-tools        # tooling for AzureFunctions
 
 choco install sql-server-management-studio      # database development with MS SQL Server needs this
-choco install azure-data-studio
+choco install azure-data-studio                 # Azure database development with MS SQL Server needs this
 choco install sql-server-2019-cumulative-update # update to latest sql server CU
+choco install mysql-cli                         # MySQL Command Line Utility
 
 choco install keepass                           # keep the secrets secret
 choco install postman                           # (free) create and manage REST-API-calls
