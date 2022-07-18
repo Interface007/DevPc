@@ -68,6 +68,7 @@
     "Microsoft.VisualStudio.Component.WslDebugging",
     "Microsoft.VisualStudio.Component.IntelliCode",
     "Microsoft.VisualStudio.Component.TeamsFx",
+    "Microsoft.VisualStudio.Component.Wcf.Tooling",
     "Microsoft.VisualStudio.Component.CodeClone",
     "Microsoft.VisualStudio.Component.GraphDocument",
     "Microsoft.VisualStudio.Component.CodeMap",
@@ -109,6 +110,10 @@
     "Microsoft.Net.Component.4.6.TargetingPack",
     "Microsoft.VisualStudio.Component.VSSDK",
     "Microsoft.VisualStudio.Component.DslTools",
+    "Microsoft.VisualStudio.Component.Workflow",
+    "Microsoft.VisualStudio.Component.Sharepoint.Tools",
+    "Microsoft.VisualStudio.Component.TeamOffice",
+    "Microsoft.VisualStudio.Workload.Office",
     "Microsoft.VisualStudio.Component.AzureDevOps.OfficeIntegration"
   ]
 }
