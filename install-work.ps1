@@ -100,6 +100,9 @@ choco install boxcryptor                        # (paid) need to keep some conte
 choco install git                               # version control
 
 choco install python3                           # (free) Python 3 programming language
+choco install dotnet-5.0-runtime                # .NET runtime
+choco install dotnet-aspnetruntime              # .NET ASP runtime
+choco install dotnet-sdk                        # .NET SDK
 
 choco install vscode                            # Visual Studio Code
 choco install visualstudio2022enterprise        # Visual Studio 2022 Enterprise - still need to install components via VS installer GUI
@@ -111,19 +114,24 @@ choco install azure-functions-core-tools        # tooling for AzureFunctions
 choco install sql-server-management-studio      # database development with MS SQL Server 
 choco install azure-data-studio                 # database development with MS Azure Studio
 choco install sql-server-2019-cumulative-update # update to latest sql server CU
+choco install sqlserver-odbcdriver              # SQL Server Driver (ODBC)
+choco install msoledbsql                        # SQL Server Driver (OLEDB)
+choco install sql2012.nativeclient              # SQL Server Driver (native client 2012)
 choco install mysql.workbench                   # database development with MySQL Server 
 choco install mysql-cli                         # MySQL Command Line Utility
 
-choco install keepass                           # keep the secrets secret
+choco install lastpass                          # keep the secrets secret
 choco install postman                           # (free) create and manage REST-API-calls
 choco install microsoft-teams.install           # (subs) will "install the installer" - user has to install
 choco install microsoft-teams                   # (subs) will install for current user
 choco install googlechrome                      # (free) browser based on Chromium
 choco install firefox                           # (free) browser based on Gecko
 choco install kindle                            # (free) to read your programming books from Amazon
+choco install onedrive                          # OneDrive
 
 choco install nodejs                            # (free) Node.js - open-source, cross-platform, back-end JavaScript runtime environment
 choco install powershell-core                   # (free) open shouce shell
+choco install az.powershell                     # Azure PowerShell
 
 choco install citrix-workspace                  # (free) needed for some remote work scenarios
 choco install vmware-horizon-client             # (free) some use this desktop virtualization
@@ -133,5 +141,7 @@ choco install vcredist140                       # (free) dependency for some sof
 choco install vcredist2015                      # (free) dependency for some software - installed just to be able to upgrade
 
 choco install screamingfrog                     # (paid) website SEO spider
+
+choco install obs-studio                        # to record screen/cam/...
 
 choco install spotify                           # (free) need good music - this installer sometimes hangs at the end of the procedure - so I put it last
