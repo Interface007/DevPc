@@ -110,6 +110,7 @@ choco install resharper-ultimate-all            # tooling for efficient C# codin
 
 choco install azure-cli                         # tooling for Azure
 choco install azure-functions-core-tools        # tooling for AzureFunctions
+choco install azcopy10                          # Azure Storage copy 
 
 choco install sql-server-management-studio      # database development with MS SQL Server 
 choco install azure-data-studio                 # database development with MS Azure Studio
