@@ -121,6 +121,7 @@ choco install sql2012.nativeclient              # SQL Server Driver (native clie
 choco install mysql.workbench                   # database development with MySQL Server 
 choco install mysql-cli                         # MySQL Command Line Utility
 
+choco install rdmfree                           # (free) Remote Desktop Manager 
 choco install lastpass                          # keep the secrets secret
 choco install postman                           # (free) create and manage REST-API-calls
 choco install microsoft-teams.install           # (subs) will "install the installer" - user has to install
