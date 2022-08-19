@@ -27,8 +27,9 @@
 # OTHER DEALINGS IN THE SOFTWARE.
 ##########################################
 
-# TaskBar to left
-Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "TaskbarAl" -Value "0" -Type Dword
+# TaskBar to left and without grouping
+Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "TaskbarAl"        -Value "0" -Type Dword
+Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "TaskbarGlomLevel" -Value "2" -Type Dword
 
 # old ALT+TAB-experience
 New-Item -Path "HKCU:\Software\Policies\Microsoft\Windows" -Name Explorer
