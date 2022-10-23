@@ -54,6 +54,7 @@ choco install 7zip                              # (free) handles most comression
 choco install treesizefree                      # (free) analyzes where all the harddisk space has gone
 choco install microsoft-edge                    # (free) browser based on Chromium
 choco install everything                        # (free) filename search
+choco install obsidian                          # (free) linked notes
 
 choco install xmind-2020                        # (paid) mindmapping
 choco install beyondcompare                     # (paid) takes comparison of folders and files to a new level
