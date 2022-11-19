@@ -17,6 +17,12 @@ Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManage
 ```
 Installs [Chocolatey](https://chocolatey.org/) as a package manager, schedules an "upgrade" to all choco-packages and installs my default toolset for a "home-pc" (which includes [REAPER daw](https://www.reaper.fm/) and [OBS Studio](https://obsproject.com/) as well as [XMind](https://www.xmind.net/) and [Beyond Compare](https://www.scootersoftware.com/)).
 
+Private PC (min)
+```PowerShell
+Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Interface007/DevPc/main/install-privat-min.ps1'))
+```
+Installs [Chocolatey](https://chocolatey.org/) as a package manager, schedules an "upgrade" to all choco-packages and installs my minimum toolset for a "home-pc".
+
 Windows 11 Configuration changes
 ```
 Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Interface007/DevPc/main/setup-win11.ps1'))
