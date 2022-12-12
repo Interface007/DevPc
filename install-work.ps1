@@ -131,6 +131,7 @@ choco install googlechrome                      # (free) browser based on Chromi
 choco install firefox                           # (free) browser based on Gecko
 choco install kindle                            # (free) to read your programming books from Amazon
 choco install onedrive                          # OneDrive
+choco install zoomit                            # (free) ZoomIt tool from SysInternals
 
 choco install nodejs                            # (free) Node.js - open-source, cross-platform, back-end JavaScript runtime environment
 choco install powershell-core                   # (free) open shouce shell
