@@ -136,6 +136,7 @@ choco install zoomit                            # (free) ZoomIt tool from SysInt
 choco install nodejs                            # (free) Node.js - open-source, cross-platform, back-end JavaScript runtime environment
 choco install powershell-core                   # (free) open shouce shell
 choco install az.powershell                     # Azure PowerShell
+choco install docker-desktop                    # Docker Desktop
 
 choco install citrix-workspace                  # (free) needed for some remote work scenarios
 choco install vmware-horizon-client             # (free) some use this desktop virtualization
