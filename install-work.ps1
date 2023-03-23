@@ -78,57 +78,53 @@ Install-Font "https://github.com/google/fonts/raw/main/ofl/redactedscript" "Reda
 winget install lightshot                          # (free) screenshots the way I want them to be
 winget install vlc                                # (free) the(!) video player
 winget install gimp.gimp                          # (free) image editing
-winget install adobereader                        # (feee) PDF reader
-winget install 7zip                               # (free) handles most comression file formats
-winget install treesizefree                       # (free) analyzes where all the harddisk space has gone
-winget install everything                         # (free) filename search
-winget install fiddler                            # (free) debugging proxy for http(s)
+winget install Adobe.Acrobat.Reader.64-bit        # (feee) PDF reader
+winget install 7zip.7zip                          # (free) handles most comression file formats
+winget install JAMSoftware.TreeSize.Free          # (free) analyzes where all the harddisk space has gone
+winget install voidtools.Everything               # (free) filename search
+winget install Telerik.Fiddler.Classic            # (free) debugging proxy for http(s)
 
-winget install --id=Obsidian.Obsidian  -e         # (freemium) "external brain"
-winget install tailscale                          # (freemium) point-to-point-VPN
+winget install Obsidian.Obsidian                  # (freemium) "external brain"
+winget install tailscale.tailscale                # (freemium) point-to-point-VPN
 
-winget install xmind-2020                         # (paid) mindmapping
-winget install beyondcompare                      # (paid) takes comparison of folders and files to a new level
-winget install cryptomator                        # (free) need to keep some content secret in the cloud
+winget install Xmind.Xmind                        # (paid) mindmapping
+winget install ScooterSoftware.BeyondCompare4     # (paid) takes comparison of folders and files to a new level
+winget install Cryptomator.Cryptomator            # (free) need to keep some content secret in the cloud
 
 # software development and business
-winget install git                               # version control
+winget install Git.Git                            # version control
 
-winget install dotnet-sdk                        # .NET SDK
+#winget install dotnet-sdk                        # .NET SDK
 
-winget install vscode                            # Visual Studio Code
-winget install visualstudio2022enterprise        # Visual Studio 2022 Enterprise - still need to install components via VS installer GUI
-winget install resharper-ultimate-all            # tooling for efficient C# coding - might be obsolete in the future, but currently it has a lot of great efficiency improvements
+winget install Microsoft.VisualStudioCode         # Visual Studio Code
+winget install Microsoft.VisualStudio.2022.Enterprise # Visual Studio 2022 Enterprise - still need to install components via VS installer GUI
+winget install JetBrains.ReSharper                # tooling for efficient C# coding - might be obsolete in the future, but currently it has a lot of great efficiency improvements
 
-winget install azure-cli                         # tooling for Azure
-winget install azure-functions-core-tools        # tooling for AzureFunctions
-winget install azcopy10                          # Azure Storage copy 
-winget install bicep                             # Azure IaC-Tooling for Bicep-definitions
+winget install Microsoft.AzureCLI                 # tooling for Azure
+winget install Microsoft.Azure.FunctionsCoreTools # tooling for AzureFunctions
+winget install Microsoft.Azure.AZCopy.10          # Azure Storage copy 
+winget install Microsoft.Bicep                    # Azure IaC-Tooling for Bicep-definitions
 
-winget install sql-server-management-studio      # database development with MS SQL Server 
-winget install azure-data-studio                 # database development with MS Azure Studio
+winget install Microsoft.SQLServerManagementStudio # database development with MS SQL Server 
+winget install Microsoft.AzureDataStudio          # database development with MS Azure Studio
 
-winget install lastpass                          # keep the secrets secret
-winget install postman                           # (free) create and manage REST-API-calls
-winget install googlechrome                      # (free) browser based on Chromium
-winget install firefox                           # (free) browser based on Gecko
-winget install kindle                            # (free) to read your programming books from Amazon
-winget install zoomit                            # (free) ZoomIt tool from SysInternals
+winget install Postman.Postman                    # (free) create and manage REST-API-calls
+winget install Google.Chrome                      # (free) browser based on Chromium
+winget install Mozilla.Firefox                    # (free) browser based on Gecko
+winget install Amazon.Kindle                      # (free) to read your programming books from Amazon
+#winget install zoomit                            # (free) ZoomIt tool from SysInternals
 
-winget install nodejs                            # (free) Node.js - open-source, cross-platform, back-end JavaScript runtime environment
-winget install powershell-core                   # (free) open shouce shell
-winget install az.powershell                     # Azure PowerShell
-winget install docker-desktop                    # Docker Desktop
+winget install OpenJS.NodeJS                      # (free) Node.js - open-source, cross-platform, back-end JavaScript runtime environment
+winget install Microsoft.PowerShell               # (free) open shouce shell
+#winget install az.powershell                     # Azure PowerShell
+winget install Docker.DockerDesktop               # Docker Desktop
 
-winget install citrix-workspace                  # (free) needed for some remote work scenarios
-winget install vmware-horizon-client             # (free) some use this desktop virtualization
-winget install ilspy                             # (free) Intermediate Language (.NET) Disassembler
+winget install Citrix.Workspace                   # (free) needed for some remote work scenarios
+winget install VMware.HorizonClient               # (free) some use this desktop virtualization
+winget install icsharpcode.ILSpy                  # (free) Intermediate Language (.NET) Disassembler
 
-winget install vcredist140                       # (free) dependency for some software - installed just to be able to upgrade
-winget install vcredist2015                      # (free) dependency for some software - installed just to be able to upgrade
+#winget install screamingfrog                     # (paid) website SEO spider
 
-winget install screamingfrog                     # (paid) website SEO spider
+winget install OBSProject.OBSStudio               # to record screen/cam/...
 
-winget install obs-studio                        # to record screen/cam/...
-
-winget install spotify                           # (free) need good music - this installer sometimes hangs at the end of the procedure - so I put it last
+winget install Spotify.Spotify                    # (free) need good music - this installer sometimes hangs at the end of the procedure - so I put it last
