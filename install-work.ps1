@@ -128,3 +128,10 @@ winget install icsharpcode.ILSpy                  # (free) Intermediate Language
 winget install OBSProject.OBSStudio               # to record screen/cam/...
 
 winget install Spotify.Spotify                    # (free) need good music - this installer sometimes hangs at the end of the procedure - so I put it last
+
+Push-Location
+Set-Location HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced
+Set-ItemProperty . HideFileExt "0"
+Pop-Location
+Stop-Process -processName: Explorer -force        # This will restart the Explorer service to make this work.
+
