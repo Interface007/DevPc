@@ -146,5 +146,8 @@ Set-ItemProperty -Path "HKCU:\\Software\Microsoft\Windows\CurrentVersion\Search"
 Set-ItemProperty -Path "HKCU:\\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "TaskbarMn" -Value 0 -Type "DWord"
 Set-ItemProperty -Path "HKLM:\\SOFTWARE\Policies\Microsoft\Windows\Windows Chat" -Name "ChatIcon" -Value 3 -Type "DWord"
 
+# because IP filters in "Conditional Access" do need IPv4, we deactivate IPv6 for all networks
+Disable-NetAdapterBinding -Name "*" -ComponentID ms_tcpip6
+
 Pop-Location
 Stop-Process -processName: Explorer -force        # This will restart the Explorer service to make this work.
