@@ -130,8 +130,21 @@ winget install OBSProject.OBSStudio               # to record screen/cam/...
 winget install Spotify.Spotify                    # (free) need good music - this installer sometimes hangs at the end of the procedure - so I put it last
 
 Push-Location
+
+# show the extensions in explorer
 Set-Location HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced
 Set-ItemProperty . HideFileExt "0"
+
+# remove widgets from taskbar
+if(!(Test-Path "HKLM:\\SOFTWARE\Policies\Microsoft\Dsh")){New-Item -Path "HKLM:\\SOFTWARE\Policies\Microsoft\Dsh" -Force}
+Set-ItemProperty -Path "HKLM:\\SOFTWARE\Policies\Microsoft\Dsh" -Name "AllowNewsAndInterests" -Value 0 -Type "DWord"
+
+# remove search from taskbar
+Set-ItemProperty -Path "HKCU:\\Software\Microsoft\Windows\CurrentVersion\Search" -Name "SearchboxTaskbarMode" -Value 0 -Type "DWord"
+
+# remove chat from taskbar
+Set-ItemProperty -Path "HKCU:\\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "TaskbarMn" -Value 0 -Type "DWord"
+Set-ItemProperty -Path "HKLM:\\SOFTWARE\Policies\Microsoft\Windows\Windows Chat" -Name "ChatIcon" -Value 3 -Type "DWord"
+
 Pop-Location
 Stop-Process -processName: Explorer -force        # This will restart the Explorer service to make this work.
-
