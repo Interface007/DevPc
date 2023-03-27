@@ -89,6 +89,7 @@ winget install tailscale.tailscale                # (freemium) point-to-point-VP
 
 winget install Xmind.Xmind                        # (paid) mindmapping
 winget install ScooterSoftware.BeyondCompare4     # (paid) takes comparison of folders and files to a new level
+winget install WinFsp.WinFsp                      # (free) enables FUSE Related Volume Types for Cryptomator
 winget install Cryptomator.Cryptomator            # (free) need to keep some content secret in the cloud
 
 # software development and business
