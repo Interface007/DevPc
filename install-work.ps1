@@ -153,9 +153,8 @@ Disable-NetAdapterBinding -Name "*" -ComponentID ms_tcpip6
 Pop-Location
 Stop-Process -processName: Explorer -force        # This will restart the Explorer service to make this work.
 
-# configure Cryptomator to use WinFUSE
-$profilePath =  $_.GetValue("ProfileImagePath") 
-$settingsPath = "$profilePath\AppData\Roaming\Cryptomator\settings.json"
+# configure Cryptomator to use WinFUSE ... TODO: neet to check whether this file exists right after setting up Cryptomator via WinGet
+$settingsPath = "$($env:APPDATA)\Cryptomator\settings.json"
 $settings = Get-Content -Path $settingsPath | ConvertFrom-Json
 $settings.mountService = "org.cryptomator.frontend.fuse.mount.WinFspMountProvider"
 $settings.checkForUpdatesEnabled = $true
