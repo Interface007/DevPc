@@ -36,11 +36,15 @@ function Install-Font {
 
     # install "Redacted Regular + Script" - unfortunately, this is not available through Chocolatey
     If((Test-Path "C:\Windows\Fonts\$fontName") -ne $True) {
-        Write-Output "downloading $fontName";
-        $fileName = "$env:temp\$fontName"
-        Invoke-WebRequest -Uri "$fontUrl/$fontName" -OutFile $fileName
-        Write-Output "... downloaded $fontName";
-
+        if($fontUrl -like 'http*') {
+          Write-Output "downloading $fontName";
+          $fileName = "$env:temp\$fontName"
+          Invoke-WebRequest -Uri "$fontUrl/$fontName" -OutFile $fileName
+          Write-Output "... downloaded $fontName";
+        } else {
+          $fileName = "$fontUrl/$fontName"
+        }
+        
         Write-Output "installing $fontName ...";
         $objShell = New-Object -ComObject Shell.Application
         $objFolder = $objShell.Namespace(0x14)
@@ -55,10 +59,21 @@ function Install-Font {
     }
 }
 
+# Google Redacted is a non-readable font - great for calendar screen shots where you just was to show free time slots
 Install-Font "https://github.com/google/fonts/raw/main/ofl/redacted"       "Redacted-Regular.ttf"
 Install-Font "https://github.com/google/fonts/raw/main/ofl/redactedscript" "RedactedScript-Bold.ttf"
 Install-Font "https://github.com/google/fonts/raw/main/ofl/redactedscript" "RedactedScript-Light.ttf"
 Install-Font "https://github.com/google/fonts/raw/main/ofl/redactedscript" "RedactedScript-Regular.ttf"
+
+# Fira Code is a great font for developers
+Invoke-WebRequest -Uri "https://github.com/tonsky/FiraCode/releases/download/6.2/Fira_Code_v6.2.zip" -OutFile "$($env:TEMP)\fira.zip"
+Expand-Archive "$($env:TEMP)\fira.zip" -DestinationPath "$($env:TEMP)\fira"
+Install-Font "$($env:TEMP)\fira\ttf" "FiraCode-Bold.ttf"
+Install-Font "$($env:TEMP)\fira\ttf" "FiraCode-Light.ttf"
+Install-Font "$($env:TEMP)\fira\ttf" "FiraCode-Medium.ttf"
+Install-Font "$($env:TEMP)\fira\ttf" "FiraCode-Regular.ttf"
+Install-Font "$($env:TEMP)\fira\ttf" "FiraCode-Retina.ttf"
+Install-Font "$($env:TEMP)\fira\ttf" "FiraCode-SemiBold.ttf"
 
 # scheduling daily upgrades of all software
 #$existingTask = Get-ScheduledTask -TaskName "WinGet Upgrade --All" -ErrorAction Ignore -WarningAction Ignore
@@ -73,9 +88,7 @@ Install-Font "https://github.com/google/fonts/raw/main/ofl/redactedscript" "Reda
 #    Write-Host "task for auto-update exists"
 #}
 
-
-#winget install firacode                          # (free) monospaced font with programming ligatures
-winget install lightshot                          # (free) screenshots the way I want them to be
+winget install Greenshot.Greenshot                # (free) screenshots the way I want them to be
 winget install vlc                                # (free) the(!) video player
 winget install gimp.gimp                          # (free) image editing
 winget install Adobe.Acrobat.Reader.64-bit        # (feee) PDF reader
