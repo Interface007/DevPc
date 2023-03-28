@@ -89,8 +89,8 @@ Install-Font "$($env:TEMP)\fira\ttf" "FiraCode-SemiBold.ttf"
 #}
 
 winget install Greenshot.Greenshot                # (free) screenshots the way I want them to be
-winget install vlc                                # (free) the(!) video player
-winget install gimp.gimp                          # (free) image editing
+winget install VideoLAN.VLC                       # (free) the(!) video player
+winget install GIMP.GIMP                          # (free) image editing
 winget install Adobe.Acrobat.Reader.64-bit        # (feee) PDF reader
 winget install 7zip.7zip                          # (free) handles most comression file formats
 winget install JAMSoftware.TreeSize.Free          # (free) analyzes where all the harddisk space has gone
