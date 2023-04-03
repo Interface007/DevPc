@@ -119,6 +119,8 @@ winget install Microsoft.Azure.FunctionsCoreTools # tooling for AzureFunctions
 winget install Microsoft.Azure.AZCopy.10          # Azure Storage copy 
 winget install Microsoft.Bicep                    # Azure IaC-Tooling for Bicep-definitions
 
+winget install Microsoft.PowerAppsCLI             # Microsoft Power Platform CLI
+
 winget install Microsoft.SQLServerManagementStudio # database development with MS SQL Server 
 winget install Microsoft.AzureDataStudio          # database development with MS Azure Studio
 
