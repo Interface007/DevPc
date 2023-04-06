@@ -103,7 +103,7 @@ winget install Obsidian.Obsidian                  # (freemium) "external brain"
 winget install tailscale.tailscale                # (freemium) point-to-point-VPN
 
 winget install Xmind.Xmind                        # (paid) mindmapping
-winget install ScooterSoftware.BeyondCompare4     # (paid) takes comparison of folders and files to a new level
+winget install ScooterSoftware.BeyondCompare4  --locale en-US    # (paid) takes comparison of folders and files to a new level
 winget install WinFsp.WinFsp                      # (free) enables FUSE Related Volume Types for Cryptomator
 winget install Cryptomator.Cryptomator            # (free) need to keep some content secret in the cloud
 
@@ -141,8 +141,8 @@ winget install icsharpcode.ILSpy                  # (free) Intermediate Language
 
 #winget install screamingfrog                     # (paid) website SEO spider
 
+# private use
 winget install OBSProject.OBSStudio               # to record screen/cam/...
-
 winget install Spotify.Spotify                    # (free) need good music - this installer sometimes hangs at the end of the procedure - so I put it last
 
 Push-Location
@@ -178,6 +178,13 @@ $path = New-Item -Path 'HKCR:\\Directory\shell\vscode' -Force
 $path | New-ItemProperty -Name '(default)' -Value 'Open Folder as VS Code Project' -PropertyType 'String' -Force
 $path = New-Item -Path 'HKCR:\\Directory\shell\vscode\command' -Force
 $path | New-ItemProperty -Name '(default)' -Value "`"$($env:LOCALAPPDATA)\Programs\Microsoft VS Code\Code.exe`" `"%V`"" -PropertyType 'String' -Force
+
+# Old ALT-TAB behavior
+$path = Get-Item -Path 'HKCU:\\Software\Microsoft\Windows\CurrentVersion\Explorer' -Force
+$path | New-ItemProperty -Name 'AltTabSettings' -Value 1 -PropertyType 'DWORD' -Force
+
+$path = New-Item -Path 'HKCU:\hive\Control Panel\Desktop' -Force
+$path | New-ItemProperty -Name UserPreferencesMask -Value  ([byte[]](0x9E,0x5E,0x07,0x80,0x12,0x00,0x00,0x00)) -PropertyType Binary -Force
 
 Pop-Location
 Stop-Process -processName: Explorer -force        # This will restart the Explorer service to make this work.
