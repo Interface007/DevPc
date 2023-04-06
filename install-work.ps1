@@ -121,6 +121,8 @@ winget install Microsoft.Azure.FunctionsCoreTools # tooling for AzureFunctions
 winget install Microsoft.Azure.AZCopy.10          # Azure Storage copy 
 winget install Microsoft.Bicep                    # Azure IaC-Tooling for Bicep-definitions
 
+winget install Microsoft.PowerAppsCLI             # Microsoft Power Platform CLI
+
 winget install Microsoft.SQLServerManagementStudio # database development with MS SQL Server 
 winget install Microsoft.AzureDataStudio          # database development with MS Azure Studio
 
@@ -134,6 +136,7 @@ winget install OpenJS.NodeJS                      # (free) Node.js - open-source
 winget install Microsoft.PowerShell               # (free) open shouce shell
 #winget install az.powershell                     # Azure PowerShell
 winget install Docker.DockerDesktop               # Docker Desktop
+winget install WiresharkFoundation.Wireshark      # WireShark network analyzer
 
 winget install Citrix.Workspace                   # (free) needed for some remote work scenarios
 winget install VMware.HorizonClient               # (free) some use this desktop virtualization
