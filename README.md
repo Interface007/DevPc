@@ -9,19 +9,19 @@ Work PC
 ```PowerShell
 Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Interface007/DevPc/main/install-work.ps1'))
 ```
-Installs [Chocolatey](https://chocolatey.org/) as a package manager, schedules an "upgrade" to all choco-packages and installs my default toolset for work.
+Uses WinGet as a package manager.
 
 Private PC
 ```PowerShell
 Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Interface007/DevPc/main/install-privat.ps1'))
 ```
-Installs [Chocolatey](https://chocolatey.org/) as a package manager, schedules an "upgrade" to all choco-packages and installs my default toolset for a "home-pc" (which includes [REAPER daw](https://www.reaper.fm/) and [OBS Studio](https://obsproject.com/) as well as [XMind](https://www.xmind.net/) and [Beyond Compare](https://www.scootersoftware.com/)).
+Uses WinGet as a package manager. Installs my default toolset for a "home-pc" (which includes [REAPER daw](https://www.reaper.fm/) and [OBS Studio](https://obsproject.com/) as well as [XMind](https://www.xmind.net/) and [Beyond Compare](https://www.scootersoftware.com/)).
 
 Private PC (min)
 ```PowerShell
 Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Interface007/DevPc/main/install-privat-min.ps1'))
 ```
-Installs [Chocolatey](https://chocolatey.org/) as a package manager, schedules an "upgrade" to all choco-packages and installs my minimum toolset for a "home-pc".
+Uses WinGet as a package manager. Installs my minimum toolset for a "home-pc".
 
 Windows 11 Configuration changes
 ```
