@@ -1,5 +1,5 @@
 # DevPc
-Some of my scripts to setup my Windows laptops. I use [chocolatey](https://chocolatey.org/) to setup as much tools as possible because that enables me to keep them up to date in a consistent way and it helps me getting up and running in a minimum amount of time.
+Some of my scripts to setup my Windows laptops. I use [WinGet](https://learn.microsoft.com/en-us/windows/package-manager/winget/) to setup as much tools as possible because that enables me to keep them up to date in a consistent way and it helps me getting up and running in a minimum amount of time.
 
 All scripts here are published under MIT License - essentially: the scripts are provided "as is" without warranty and you are allowed to do whatever you want with it.
 
