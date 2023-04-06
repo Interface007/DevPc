@@ -27,22 +27,4 @@
 # OTHER DEALINGS IN THE SOFTWARE.
 ##########################################
 
-Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
-
-# we don't want to manually confirm each and every installation
-choco feature enable -n allowGlobalConfirmation
-
-# scheduling daily upgrades of all software
-$existingTask = Get-ScheduledTask -TaskName "Choco Upgrade All" -ErrorAction Ignore -WarningAction Ignore
-if (!$existingTask) {
-    $action = New-ScheduledTaskAction `
-        -Execute 'C:\ProgramData\chocolatey\bin\choco.exe' `
-        -Argument 'upgrade all -y'
-
-    $trigger =  New-ScheduledTaskTrigger -Daily -At 12am
-    Register-ScheduledTask -Action $action -Trigger $trigger -TaskName "Choco Upgrade All" -Description "Upgrade all choco packages"   
-}  else {
-    Write-Host "task for auto-update exists"
-}
-
 choco install dellcommandupdate-uwp                 # for DELL laptops a must have

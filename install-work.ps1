@@ -173,18 +173,26 @@ New-PSDrive -Name HKCR -PSProvider Registry -Root HKEY_CLASSES_ROOT
 $path = New-Item -Path 'HKCR:\*\shell\Open with VS Code' -Force
 $path | New-ItemProperty -Name '(default)' -Value 'Edit with VS Code' -PropertyType 'String' -Force
 $path | New-ItemProperty -Name 'Icon' -Value "`"$($env:LOCALAPPDATA)\Programs\Microsoft VS Code\Code.exe`",0" -PropertyType 'String' -Force
-$path = New-Item -Path 'HKCR:\\*\shell\Open with VS Code\command' -Force
+$path = New-Item -Path 'HKCR:\*\shell\Open with VS Code\command' -Force
 $path | New-ItemProperty -Name '(default)' -Value "`"$($env:LOCALAPPDATA)\Programs\Microsoft VS Code\Code.exe`" `"%1`"" -PropertyType 'String' -Force
 
 # This will make it appear when you right click ON a folder
-$path = New-Item -Path 'HKCR:\\Directory\shell\vscode' -Force
+$path = New-Item -Path 'HKCR:\Directory\shell\vscode' -Force
 $path | New-ItemProperty -Name '(default)' -Value 'Open Folder as VS Code Project' -PropertyType 'String' -Force
-$path = New-Item -Path 'HKCR:\\Directory\shell\vscode\command' -Force
+$path = New-Item -Path 'HKCR:\Directory\shell\vscode\command' -Force
 $path | New-ItemProperty -Name '(default)' -Value "`"$($env:LOCALAPPDATA)\Programs\Microsoft VS Code\Code.exe`" `"%V`"" -PropertyType 'String' -Force
 
-# Old ALT-TAB behavior
-$path = Get-Item -Path 'HKCU:\\Software\Microsoft\Windows\CurrentVersion\Explorer' -Force
-$path | New-ItemProperty -Name 'AltTabSettings' -Value 1 -PropertyType 'DWORD' -Force
+# TaskBar to left and without grouping
+Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "TaskbarAl"        -Value "0" -Type Dword
+Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "TaskbarGlomLevel" -Value "2" -Type Dword
+
+# ALT+TAB-experience without IE-Tab-Switching
+New-Item -Path "HKCU:\Software\Policies\Microsoft\Windows" -Name Explorer
+Set-ItemProperty -Path "HKCU:\Software\Policies\Microsoft\Windows\Explorer" -Name "MultiTaskingAltTabFilter" -Value "4" -Type Dword
+
+## very Old ALT-TAB behavior
+#$path = Get-Item -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer' -Force
+#$path | New-ItemProperty -Name 'AltTabSettings' -Value 1 -PropertyType 'DWORD' -Force
 
 $path = New-Item -Path 'HKCU:\hive\Control Panel\Desktop' -Force
 $path | New-ItemProperty -Name UserPreferencesMask -Value  ([byte[]](0x9E,0x5E,0x07,0x80,0x12,0x00,0x00,0x00)) -PropertyType Binary -Force
