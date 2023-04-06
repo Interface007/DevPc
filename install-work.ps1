@@ -29,34 +29,36 @@
 
 # installation of fonts
 function Install-Font {
-    param (
-        $fontUrl,
-        $fontName
-    )
+  param (
+    $fontUrl,
+    $fontName
+  )
 
-    # install "Redacted Regular + Script" - unfortunately, this is not available through Chocolatey
-    If((Test-Path "C:\Windows\Fonts\$fontName") -ne $True) {
-        if($fontUrl -like 'http*') {
-          Write-Output "downloading $fontName";
-          $fileName = "$env:temp\$fontName"
-          Invoke-WebRequest -Uri "$fontUrl/$fontName" -OutFile $fileName
-          Write-Output "... downloaded $fontName";
-        } else {
-          $fileName = "$fontUrl/$fontName"
-        }
-        
-        Write-Output "installing $fontName ...";
-        $objShell = New-Object -ComObject Shell.Application
-        $objFolder = $objShell.Namespace(0x14)
-        
-        $copyFlag = [String]::Format("{0:x}", 4 + 16);
-        $objFolder.CopyHere($fileName, $copyFlag)
-        
-        Remove-Item $fileName
-        Write-Output "... finished installing $fontName";
-    } else {
-        Write-Output "font $fontName skipped, because already installed";
+  # install "Redacted Regular + Script" - unfortunately, this is not available through Chocolatey
+  If ((Test-Path "C:\Windows\Fonts\$fontName") -ne $True) {
+    if ($fontUrl -like 'http*') {
+      Write-Output "downloading $fontName";
+      $fileName = "$env:temp\$fontName"
+      Invoke-WebRequest -Uri "$fontUrl/$fontName" -OutFile $fileName
+      Write-Output "... downloaded $fontName";
     }
+    else {
+      $fileName = "$fontUrl/$fontName"
+    }
+        
+    Write-Output "installing $fontName ...";
+    $objShell = New-Object -ComObject Shell.Application
+    $objFolder = $objShell.Namespace(0x14)
+        
+    $copyFlag = [String]::Format("{0:x}", 4 + 16);
+    $objFolder.CopyHere($fileName, $copyFlag)
+        
+    Remove-Item $fileName
+    Write-Output "... finished installing $fontName";
+  }
+  else {
+    Write-Output "font $fontName skipped, because already installed";
+  }
 }
 
 # Google Redacted is a non-readable font - great for calendar screen shots where you just was to show free time slots
@@ -150,7 +152,7 @@ Set-Location HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced
 Set-ItemProperty . HideFileExt "0"
 
 # remove widgets from taskbar
-if(!(Test-Path "HKLM:\\SOFTWARE\Policies\Microsoft\Dsh")){New-Item -Path "HKLM:\\SOFTWARE\Policies\Microsoft\Dsh" -Force}
+if (!(Test-Path "HKLM:\\SOFTWARE\Policies\Microsoft\Dsh")) { New-Item -Path "HKLM:\\SOFTWARE\Policies\Microsoft\Dsh" -Force }
 Set-ItemProperty -Path "HKLM:\\SOFTWARE\Policies\Microsoft\Dsh" -Name "AllowNewsAndInterests" -Value 0 -Type "DWord"
 
 # remove search from taskbar
@@ -162,6 +164,20 @@ Set-ItemProperty -Path "HKLM:\\SOFTWARE\Policies\Microsoft\Windows\Windows Chat"
 
 # because IP filters in "Conditional Access" do need IPv4, we deactivate IPv6 for all networks
 Disable-NetAdapterBinding -Name "*" -ComponentID ms_tcpip6
+
+# Open files
+New-PSDrive -Name HKCR -PSProvider Registry -Root HKEY_CLASSES_ROOT
+$path = New-Item -Path 'HKCR:\*\shell\Open with VS Code' -Force
+$path | New-ItemProperty -Name '(default)' -Value 'Edit with VS Code' -PropertyType 'String' -Force
+$path | New-ItemProperty -Name 'Icon' -Value "`"$($env:LOCALAPPDATA)\Programs\Microsoft VS Code\Code.exe`",0" -PropertyType 'String' -Force
+$path = New-Item -Path 'HKCR:\\*\shell\Open with VS Code\command' -Force
+$path | New-ItemProperty -Name '(default)' -Value "`"$($env:LOCALAPPDATA)\Programs\Microsoft VS Code\Code.exe`" `"%1`"" -PropertyType 'String' -Force
+
+# This will make it appear when you right click ON a folder
+$path = New-Item -Path 'HKCR:\\Directory\shell\vscode' -Force
+$path | New-ItemProperty -Name '(default)' -Value 'Open Folder as VS Code Project' -PropertyType 'String' -Force
+$path = New-Item -Path 'HKCR:\\Directory\shell\vscode\command' -Force
+$path | New-ItemProperty -Name '(default)' -Value "`"$($env:LOCALAPPDATA)\Programs\Microsoft VS Code\Code.exe`" `"%V`"" -PropertyType 'String' -Force
 
 Pop-Location
 Stop-Process -processName: Explorer -force        # This will restart the Explorer service to make this work.
