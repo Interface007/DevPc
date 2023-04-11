@@ -200,6 +200,9 @@ $path | New-ItemProperty -Name UserPreferencesMask -Value  ([byte[]](0x9E,0x5E,0
 # switch back to win10-context menu in explorer
 reg add "HKCU\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\InprocServer32" /f /ve
 
+# enable tree expansion in Explorer when navigating into a folder
+reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /V NavPaneExpandToCurrentFolder /T REG_DWORD /D 00000001 /F
+
 Pop-Location
 Stop-Process -processName: Explorer -force        # This will restart the Explorer service to make this work.
 
