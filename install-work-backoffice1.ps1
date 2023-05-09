@@ -27,94 +27,6 @@
 # OTHER DEALINGS IN THE SOFTWARE.
 ##########################################
 
-Function Install-FontManual {
-  [CmdletBinding(SupportsShouldProcess)]
-  Param(
-      [Parameter(Mandatory)]
-      [IO.FileInfo]$Font,
-
-      [Parameter(Mandatory)]
-      [ValidateSet('System', 'User')]
-      [String]$Scope
-  )
-
-  switch ($Scope) {
-      'System' {
-          $FontsFolder = [Environment]::GetFolderPath('Fonts')
-          $FontsRegKey = 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts'
-      }
-      'User' {
-          $FontsFolder = Join-Path -Path ([Environment]::GetFolderPath('LocalApplicationData')) -ChildPath 'Microsoft\Windows\Fonts'
-          $FontsRegKey = 'HKCU:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts'
-      }
-  }
-
-  if ($Scope -eq 'User') {
-      $null = New-Item -Path $FontsFolder -ItemType Directory -ErrorAction Ignore
-      $null = New-Item -Path $FontsRegKey -ErrorAction Ignore
-  }
-
-  try {
-      Add-Type -AssemblyName PresentationCore -ErrorAction Stop
-  } catch {
-      throw $_
-  }
-
-  $FontInstallName = $Font.Name
-  $FontInstallPath = Join-Path -Path $FontsFolder -ChildPath $FontInstallName
-
-  # Matches the convention used by the Explorer shell
-  if (Test-Path -Path $FontInstallPath) {
-      $FontNameSuffix = -1
-      do {
-          $FontNameSuffix++
-          $FontInstallName = '{0}_{1}{2}' -f $Font.BaseName, $FontNameSuffix, $Font.Extension
-          $FontInstallPath = Join-Path -Path $FontsFolder -ChildPath $FontInstallName
-      } while (Test-Path -Path $FontInstallPath)
-  }
-  Write-Debug -Message ('[{0}] Font install path: {1}' -f $Font.Name, $FontInstallPath)
-
-  $FontUri = New-Object -TypeName Uri -ArgumentList $Font.FullName
-  try {
-      $GlyphTypeface = New-Object -TypeName Windows.Media.GlyphTypeface -ArgumentList $FontUri
-  } catch {
-      Write-Error -Message ('Unable to import font: {0}' -f $Font)
-      continue
-  }
-
-  $FontNameCulture = 'en-US'
-  if ($GlyphTypeface.Win32FamilyNames.ContainsKey($FontNameCulture) -and $GlyphTypeface.Win32FaceNames.ContainsKey($FontNameCulture)) {
-      $FontFamilyName = $GlyphTypeface.Win32FamilyNames[$FontNameCulture]
-      $FontFaceName = $GlyphTypeface.Win32FaceNames[$FontNameCulture]
-  } else {
-      Write-Error -Message ('Unable to determine font name culture: {0}' -f $Font)
-      continue
-  }
-
-  # Matches the convention used by the Explorer shell
-  if ($FontFaceName -eq 'Regular') {
-      $FontRegistryName = '{0} (TrueType)' -f $FontFamilyName
-  } else {
-      $FontRegistryName = '{0} {1} (TrueType)' -f $FontFamilyName, $FontFaceName
-  }
-  Write-Debug -Message ('[{0}] Font registry name: {1}' -f $Font.Name, $FontRegistryName)
-
-  try {
-      $FontsRegItem = Get-Item -Path $FontsRegKey -ErrorAction Stop
-  } catch {
-      throw ('Unable to access {0} fonts registry key.' -f $Scope.ToLower())
-  }
-
-  if ($FontsRegItem.Property.Contains($FontRegistryName)) {
-      Write-Error -Message ('Font registry name already exists: {0}' -f $FontRegistryName)
-      continue
-  }
-
-  Write-Verbose -Message ('Installing font manually: {0}' -f $Font.Name)
-  Copy-Item -Path $Font.FullName -Destination $FontInstallPath
-  $null = New-ItemProperty -Path $FontsRegKey -Name $FontRegistryName -PropertyType String -Value $FontInstallName
-}
-
 # installation of fonts
 function Install-Font {
   param (
@@ -134,15 +46,12 @@ function Install-Font {
       $fileName = "$fontUrl/$fontName"
     }
 
-    $file = Get-Item -Path $fileName
-    Install-FontManual -Font $file -Scope System
-
-    # Write-Output "installing $fontName ...";
-    # $objShell = New-Object -ComObject Shell.Application
-    # $objFolder = $objShell.Namespace(0x14)
+    Write-Output "installing $fontName ...";
+    $objShell = New-Object -ComObject Shell.Application
+    $objFolder = $objShell.Namespace("C:\Windows\Fonts")
         
-    # $copyFlag = [String]::Format("{0:x}", 4 + 16);
-    # $objFolder.CopyHere($fileName, $copyFlag)
+    $copyFlag = [String]::Format("{0:x}", 4 + 16);
+    $objFolder.CopyHere($fileName, $copyFlag)
         
     Remove-Item $fileName
     Write-Output "... finished installing $fontName";
@@ -152,21 +61,21 @@ function Install-Font {
   }
 }
 
-# # Google Redacted is a non-readable font - great for calendar screen shots where you just was to show free time slots
-# Install-Font "https://github.com/google/fonts/raw/main/ofl/redacted"       "Redacted-Regular.ttf"
-# Install-Font "https://github.com/google/fonts/raw/main/ofl/redactedscript" "RedactedScript-Bold.ttf"
-# Install-Font "https://github.com/google/fonts/raw/main/ofl/redactedscript" "RedactedScript-Light.ttf"
-# Install-Font "https://github.com/google/fonts/raw/main/ofl/redactedscript" "RedactedScript-Regular.ttf"
+# Google Redacted is a non-readable font - great for calendar screen shots where you just was to show free time slots
+Install-Font "https://github.com/google/fonts/raw/main/ofl/redacted"       "Redacted-Regular.ttf"
+Install-Font "https://github.com/google/fonts/raw/main/ofl/redactedscript" "RedactedScript-Bold.ttf"
+Install-Font "https://github.com/google/fonts/raw/main/ofl/redactedscript" "RedactedScript-Light.ttf"
+Install-Font "https://github.com/google/fonts/raw/main/ofl/redactedscript" "RedactedScript-Regular.ttf"
 
-# # Fira Code is a great font for developers
-# Invoke-WebRequest -Uri "https://github.com/tonsky/FiraCode/releases/download/6.2/Fira_Code_v6.2.zip" -OutFile "$($env:TEMP)\fira.zip"
-# Expand-Archive "$($env:TEMP)\fira.zip" -DestinationPath "$($env:TEMP)\fira"
-# Install-Font "$($env:TEMP)\fira\ttf" "FiraCode-Bold.ttf"
-# Install-Font "$($env:TEMP)\fira\ttf" "FiraCode-Light.ttf"
-# Install-Font "$($env:TEMP)\fira\ttf" "FiraCode-Medium.ttf"
-# Install-Font "$($env:TEMP)\fira\ttf" "FiraCode-Regular.ttf"
-# Install-Font "$($env:TEMP)\fira\ttf" "FiraCode-Retina.ttf"
-# Install-Font "$($env:TEMP)\fira\ttf" "FiraCode-SemiBold.ttf"
+# Fira Code is a great font for developers
+Invoke-WebRequest -Uri "https://github.com/tonsky/FiraCode/releases/download/6.2/Fira_Code_v6.2.zip" -OutFile "$($env:TEMP)\fira.zip"
+Expand-Archive "$($env:TEMP)\fira.zip" -DestinationPath "$($env:TEMP)\fira"
+Install-Font "$($env:TEMP)\fira\ttf" "FiraCode-Bold.ttf"
+Install-Font "$($env:TEMP)\fira\ttf" "FiraCode-Light.ttf"
+Install-Font "$($env:TEMP)\fira\ttf" "FiraCode-Medium.ttf"
+Install-Font "$($env:TEMP)\fira\ttf" "FiraCode-Regular.ttf"
+Install-Font "$($env:TEMP)\fira\ttf" "FiraCode-Retina.ttf"
+Install-Font "$($env:TEMP)\fira\ttf" "FiraCode-SemiBold.ttf"
 
 winget install 7zip.7zip                          # (free) handles most comression file formats
 winget install Adobe.Acrobat.Reader.64-bit        # (feee) PDF reader
@@ -236,5 +145,15 @@ reg add "HKCU\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\Inpr
 # enable tree expansion in Explorer when navigating into a folder
 reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /V NavPaneExpandToCurrentFolder /T REG_DWORD /D 00000001 /F
 
+reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Edge" /V AddressBarMicrosoftSearchInBingProviderEnabled /T REG_DWORD /D 00000000 /F
+reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Edge" /V AdsSettingForIntrusiveAdsSites /T REG_DWORD /D 00000002 /F
+reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Edge" /V DefaultSearchProviderEnabled /T REG_DWORD /D 00000001 /F
+reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Edge" /V DefaultSearchProviderSearchURL /T REG_SZ /D '{google:baseURL}search?q={searchTerms}&{google:RLZ}{google:originalQueryForSuggestion}{google:assistedQueryStats}{google:searchFieldtrialParameter}{google:searchClient}{google:sourceId}ie={inputEncoding}' /F
+reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Edge" /V DefaultSearchProviderEnabled /T REG_DWORD /D 00000001 /F
+
 Pop-Location
 Stop-Process -processName: Explorer -force        # This will restart the Explorer service to make this work.
+
+$agentPath = $env:TEMP + '\MARSAgentInstaller.exe'
+Invoke-WebRequest -Uri 'https://aka.ms/azurebackup_agent' -OutFile $agentPath
+& $agentPath /q /m | out-null

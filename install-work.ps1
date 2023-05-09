@@ -48,7 +48,7 @@ function Install-Font {
         
     Write-Output "installing $fontName ...";
     $objShell = New-Object -ComObject Shell.Application
-    $objFolder = $objShell.Namespace(0x14)
+    $objFolder = $objShell.Namespace("C:\Windows\Fonts")
         
     $copyFlag = [String]::Format("{0:x}", 4 + 16);
     $objFolder.CopyHere($fileName, $copyFlag)
