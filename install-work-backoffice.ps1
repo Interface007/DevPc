@@ -152,21 +152,21 @@ function Install-Font {
   }
 }
 
-# Google Redacted is a non-readable font - great for calendar screen shots where you just was to show free time slots
-Install-Font "https://github.com/google/fonts/raw/main/ofl/redacted"       "Redacted-Regular.ttf"
-Install-Font "https://github.com/google/fonts/raw/main/ofl/redactedscript" "RedactedScript-Bold.ttf"
-Install-Font "https://github.com/google/fonts/raw/main/ofl/redactedscript" "RedactedScript-Light.ttf"
-Install-Font "https://github.com/google/fonts/raw/main/ofl/redactedscript" "RedactedScript-Regular.ttf"
+# # Google Redacted is a non-readable font - great for calendar screen shots where you just was to show free time slots
+# Install-Font "https://github.com/google/fonts/raw/main/ofl/redacted"       "Redacted-Regular.ttf"
+# Install-Font "https://github.com/google/fonts/raw/main/ofl/redactedscript" "RedactedScript-Bold.ttf"
+# Install-Font "https://github.com/google/fonts/raw/main/ofl/redactedscript" "RedactedScript-Light.ttf"
+# Install-Font "https://github.com/google/fonts/raw/main/ofl/redactedscript" "RedactedScript-Regular.ttf"
 
-# Fira Code is a great font for developers
-Invoke-WebRequest -Uri "https://github.com/tonsky/FiraCode/releases/download/6.2/Fira_Code_v6.2.zip" -OutFile "$($env:TEMP)\fira.zip"
-Expand-Archive "$($env:TEMP)\fira.zip" -DestinationPath "$($env:TEMP)\fira"
-Install-Font "$($env:TEMP)\fira\ttf" "FiraCode-Bold.ttf"
-Install-Font "$($env:TEMP)\fira\ttf" "FiraCode-Light.ttf"
-Install-Font "$($env:TEMP)\fira\ttf" "FiraCode-Medium.ttf"
-Install-Font "$($env:TEMP)\fira\ttf" "FiraCode-Regular.ttf"
-Install-Font "$($env:TEMP)\fira\ttf" "FiraCode-Retina.ttf"
-Install-Font "$($env:TEMP)\fira\ttf" "FiraCode-SemiBold.ttf"
+# # Fira Code is a great font for developers
+# Invoke-WebRequest -Uri "https://github.com/tonsky/FiraCode/releases/download/6.2/Fira_Code_v6.2.zip" -OutFile "$($env:TEMP)\fira.zip"
+# Expand-Archive "$($env:TEMP)\fira.zip" -DestinationPath "$($env:TEMP)\fira"
+# Install-Font "$($env:TEMP)\fira\ttf" "FiraCode-Bold.ttf"
+# Install-Font "$($env:TEMP)\fira\ttf" "FiraCode-Light.ttf"
+# Install-Font "$($env:TEMP)\fira\ttf" "FiraCode-Medium.ttf"
+# Install-Font "$($env:TEMP)\fira\ttf" "FiraCode-Regular.ttf"
+# Install-Font "$($env:TEMP)\fira\ttf" "FiraCode-Retina.ttf"
+# Install-Font "$($env:TEMP)\fira\ttf" "FiraCode-SemiBold.ttf"
 
 winget install 7zip.7zip                          # (free) handles most comression file formats
 winget install Adobe.Acrobat.Reader.64-bit        # (feee) PDF reader
