@@ -81,7 +81,6 @@ winget install 7zip.7zip                          # (free) handles most comressi
 winget install Adobe.Acrobat.Reader.64-bit        # (feee) PDF reader
 winget install voidtools.Everything               # (free) filename search
 winget install JAMSoftware.TreeSize.Free          # (free) analyzes where all the harddisk space has gone
-winget install VideoLAN.VLC                       # (free) the(!) video player
 winget install ScooterSoftware.BeyondCompare4  --locale en-US    # (paid) takes comparison of folders and files to a new level
 winget install Microsoft.VisualStudioCode         # Visual Studio Code
 winget install geeksoftwareGmbH.PDF24Creator  -e  # PDF-Tools
