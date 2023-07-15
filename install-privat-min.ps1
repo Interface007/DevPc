@@ -35,14 +35,13 @@ function Install-Font {
   )
 
   # install "Redacted Regular + Script" - unfortunately, this is not available through Chocolatey
-  If ((Test-Path "C:\Windows\Fonts\$fontName") -ne $True) {
-    if ($fontUrl -like 'http*') {
+  If ((Test-Path "C:\Windows\Fonts\$fontName") -ne $True -and (Test-Path "$($env:LOCALAPPDATA)\Microsoft\Windows\Fonts\$fontName") -ne $True) {
+    IF ($fontUrl -like 'http*') {
       Write-Output "downloading $fontName";
       $fileName = "$env:temp\$fontName"
       Invoke-WebRequest -Uri "$fontUrl/$fontName" -OutFile $fileName
       Write-Output "... downloaded $fontName";
-    }
-    else {
+    } ELSE {
       $fileName = "$fontUrl/$fontName"
     }
         
@@ -69,7 +68,7 @@ Install-Font "https://github.com/google/fonts/raw/main/ofl/redactedscript" "Reda
 
 # Fira Code is a great font for developers
 Invoke-WebRequest -Uri "https://github.com/tonsky/FiraCode/releases/download/6.2/Fira_Code_v6.2.zip" -OutFile "$($env:TEMP)\fira.zip"
-Expand-Archive "$($env:TEMP)\fira.zip" -DestinationPath "$($env:TEMP)\fira"
+Expand-Archive "$($env:TEMP)\fira.zip" -DestinationPath "$($env:TEMP)\fira" -Force
 Install-Font "$($env:TEMP)\fira\ttf" "FiraCode-Bold.ttf"
 Install-Font "$($env:TEMP)\fira\ttf" "FiraCode-Light.ttf"
 Install-Font "$($env:TEMP)\fira\ttf" "FiraCode-Medium.ttf"
@@ -77,20 +76,20 @@ Install-Font "$($env:TEMP)\fira\ttf" "FiraCode-Regular.ttf"
 Install-Font "$($env:TEMP)\fira\ttf" "FiraCode-Retina.ttf"
 Install-Font "$($env:TEMP)\fira\ttf" "FiraCode-SemiBold.ttf"
 
-winget install Greenshot.Greenshot              --source winget # (free) screenshots the way I want them to be
-winget install VideoLAN.VLC                     --source winget # (free) the(!) video player
-winget install GIMP.GIMP                        --source winget # (free) image editing
-winget install Adobe.Acrobat.Reader.64-bit      --source winget # (feee) PDF reader
-winget install 7zip.7zip                        --source winget # (free) handles most comression file formats
-winget install JAMSoftware.TreeSize.Free        --source winget # (free) analyzes where all the harddisk space has gone
-winget install voidtools.Everything             --source winget # (free) filename search
+winget install -e --id Greenshot.Greenshot                    --source winget # (free) screenshots the way I want them to be
+winget install -e --id VideoLAN.VLC                           --source winget # (free) the(!) video player
+winget install -e --id GIMP.GIMP                              --source winget # (free) image editing
+winget install -e --id Adobe.Acrobat.Reader.64-bit            --source winget # (feee) PDF reader
+winget install -e --id 7zip.7zip                              --source winget # (free) handles most comression file formats
+winget install -e --id JAMSoftware.TreeSize.Free              --source winget # (free) analyzes where all the harddisk space has gone
+winget install -e --id voidtools.Everything                   --source winget # (free) filename search
 
-winget install Obsidian.Obsidian                --source winget # (freemium) "external brain"
-winget install tailscale.tailscale              --source winget # (freemium) point-to-point-VPN
+winget install -e --id Obsidian.Obsidian                      --source winget # (freemium) "external brain"
+winget install -e --id tailscale.tailscale                    --source winget # (freemium) point-to-point-VPN
 
-winget install ScooterSoftware.BeyondCompare4   --source winget --locale en-US # (paid) takes comparison of folders and files to a new level
-winget install WinFsp.WinFsp                    --source winget # (free) enables FUSE Related Volume Types for Cryptomator
-winget install Cryptomator.Cryptomator          --source winget # (free) need to keep some content secret in the cloud
+winget install -e --id ScooterSoftware.BeyondCompare4         --source winget --locale en-US # (paid) takes comparison of folders and files to a new level
+winget install -e --id WinFsp.WinFsp                          --source winget # (free) enables FUSE Related Volume Types for Cryptomator
+winget install -e --id Cryptomator.Cryptomator                --source winget # (free) need to keep some content secret in the cloud
 
 
 Push-Location
