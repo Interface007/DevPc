@@ -144,6 +144,10 @@ winget install icsharpcode.ILSpy                  # (free) Intermediate Language
 
 #winget install screamingfrog                     # (paid) website SEO spider
 
+#  WinGetUI (https://github.com/marticliment/WingetUI) and start with update
+winget install wingetui
+Start-Process "$($env:LOCALAPPDATA)\Programs\WingetUI\wingetui.exe" -wait -ArgumentList "--updateapps"
+
 # private use
 winget install OBSProject.OBSStudio               # to record screen/cam/...
 winget install Spotify.Spotify                    # (free) need good music - this installer sometimes hangs at the end of the procedure - so I put it last
