@@ -27,34 +27,120 @@
 # OTHER DEALINGS IN THE SOFTWARE.
 ##########################################
 
-Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+# installation of fonts
+function Install-Font {
+  param (
+    $fontUrl,
+    $fontName
+  )
 
-choco feature enable -n allowGlobalConfirmation
-
-# scheduling daily upgrades of all software
-$existingTask = Get-ScheduledTask -TaskName "Choco Upgrade All" -ErrorAction Ignore -WarningAction Ignore
-if (!$existingTask) {
-    $action = New-ScheduledTaskAction `
-        -Execute 'C:\ProgramData\chocolatey\bin\choco.exe' `
-        -Argument 'upgrade all -y'
-
-    $trigger =  New-ScheduledTaskTrigger -Daily -At 12am
-    Register-ScheduledTask -Action $action -Trigger $trigger -TaskName "Choco Upgrade All" -Description "Upgrade all choco packages"   
-}  else {
-    Write-Host "task for auto-update exists"
+  # install "Redacted Regular + Script" - unfortunately, this is not available through Chocolatey
+  If ((Test-Path "C:\Windows\Fonts\$fontName") -ne $True) {
+    if ($fontUrl -like 'http*') {
+      Write-Output "downloading $fontName";
+      $fileName = "$env:temp\$fontName"
+      Invoke-WebRequest -Uri "$fontUrl/$fontName" -OutFile $fileName
+      Write-Output "... downloaded $fontName";
+    }
+    else {
+      $fileName = "$fontUrl/$fontName"
+    }
+        
+    Write-Output "installing $fontName ...";
+    $objShell = New-Object -ComObject Shell.Application
+    $objFolder = $objShell.Namespace("C:\Windows\Fonts")
+        
+    $copyFlag = [String]::Format("{0:x}", 4 + 16);
+    $objFolder.CopyHere($fileName, $copyFlag)
+        
+    Remove-Item $fileName
+    Write-Output "... finished installing $fontName";
+  }
+  else {
+    Write-Output "font $fontName skipped, because already installed";
+  }
 }
 
+# Google Redacted is a non-readable font - great for calendar screen shots where you just was to show free time slots
+Install-Font "https://github.com/google/fonts/raw/main/ofl/redacted"       "Redacted-Regular.ttf"
+Install-Font "https://github.com/google/fonts/raw/main/ofl/redactedscript" "RedactedScript-Bold.ttf"
+Install-Font "https://github.com/google/fonts/raw/main/ofl/redactedscript" "RedactedScript-Light.ttf"
+Install-Font "https://github.com/google/fonts/raw/main/ofl/redactedscript" "RedactedScript-Regular.ttf"
 
-choco install firacode                          # (free) monospaced font with programming ligatures
-choco install lightshot                         # (free) screenshots the way I want them to be
-choco install vlc                               # (free) the(!) video player
-choco install gimp                              # (free) image editing
-choco install adobereader                       # (feee) PDF reader
-choco install 7zip                              # (free) handles most comression file formats
-choco install treesizefree                      # (free) analyzes where all the harddisk space has gone
-choco install microsoft-edge                    # (free) browser based on Chromium
-choco install everything                        # (free) filename search
-choco install obsidian                          # (free) linked notes
-choco install cryptomator                       # (free) need to keep some content secret in the cloud
+# Fira Code is a great font for developers
+Invoke-WebRequest -Uri "https://github.com/tonsky/FiraCode/releases/download/6.2/Fira_Code_v6.2.zip" -OutFile "$($env:TEMP)\fira.zip"
+Expand-Archive "$($env:TEMP)\fira.zip" -DestinationPath "$($env:TEMP)\fira"
+Install-Font "$($env:TEMP)\fira\ttf" "FiraCode-Bold.ttf"
+Install-Font "$($env:TEMP)\fira\ttf" "FiraCode-Light.ttf"
+Install-Font "$($env:TEMP)\fira\ttf" "FiraCode-Medium.ttf"
+Install-Font "$($env:TEMP)\fira\ttf" "FiraCode-Regular.ttf"
+Install-Font "$($env:TEMP)\fira\ttf" "FiraCode-Retina.ttf"
+Install-Font "$($env:TEMP)\fira\ttf" "FiraCode-SemiBold.ttf"
 
-choco install beyondcompare                     # (paid) takes comparison of folders and files to a new level
+winget install Greenshot.Greenshot                # (free) screenshots the way I want them to be
+winget install VideoLAN.VLC                       # (free) the(!) video player
+winget install GIMP.GIMP                          # (free) image editing
+winget install Adobe.Acrobat.Reader.64-bit        # (feee) PDF reader
+winget install 7zip.7zip                          # (free) handles most comression file formats
+winget install JAMSoftware.TreeSize.Free          # (free) analyzes where all the harddisk space has gone
+winget install voidtools.Everything               # (free) filename search
+
+winget install Obsidian.Obsidian                  # (freemium) "external brain"
+winget install tailscale.tailscale                # (freemium) point-to-point-VPN
+
+winget install ScooterSoftware.BeyondCompare4  --locale en-US    # (paid) takes comparison of folders and files to a new level
+winget install WinFsp.WinFsp                      # (free) enables FUSE Related Volume Types for Cryptomator
+winget install Cryptomator.Cryptomator            # (free) need to keep some content secret in the cloud
+
+
+Push-Location
+
+# show the extensions in explorer
+Set-Location HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced
+Set-ItemProperty . HideFileExt "0"
+
+# remove widgets from taskbar
+if (!(Test-Path "HKLM:\\SOFTWARE\Policies\Microsoft\Dsh")) { New-Item -Path "HKLM:\\SOFTWARE\Policies\Microsoft\Dsh" -Force }
+Set-ItemProperty -Path "HKLM:\\SOFTWARE\Policies\Microsoft\Dsh" -Name "AllowNewsAndInterests" -Value 0 -Type "DWord"
+
+# remove search from taskbar
+Set-ItemProperty -Path "HKCU:\\Software\Microsoft\Windows\CurrentVersion\Search" -Name "SearchboxTaskbarMode" -Value 0 -Type "DWord"
+
+# remove chat from taskbar
+Set-ItemProperty -Path "HKCU:\\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "TaskbarMn" -Value 0 -Type "DWord"
+Set-ItemProperty -Path "HKLM:\\SOFTWARE\Policies\Microsoft\Windows\Windows Chat" -Name "ChatIcon" -Value 3 -Type "DWord"
+
+# Open files
+New-PSDrive -Name HKCR -PSProvider Registry -Root HKEY_CLASSES_ROOT
+$path = New-Item -Path 'HKCR:\*\shell\Open with VS Code' -Force
+$path | New-ItemProperty -Name '(default)' -Value 'Edit with VS Code' -PropertyType 'String' -Force
+$path | New-ItemProperty -Name 'Icon' -Value "`"$($env:LOCALAPPDATA)\Programs\Microsoft VS Code\Code.exe`",0" -PropertyType 'String' -Force
+$path = New-Item -Path 'HKCR:\\*\shell\Open with VS Code\command' -Force
+$path | New-ItemProperty -Name '(default)' -Value "`"$($env:LOCALAPPDATA)\Programs\Microsoft VS Code\Code.exe`" `"%1`"" -PropertyType 'String' -Force
+
+# This will make it appear when you right click ON a folder
+$path = New-Item -Path 'HKCR:\\Directory\shell\vscode' -Force
+$path | New-ItemProperty -Name '(default)' -Value 'Open Folder as VS Code Project' -PropertyType 'String' -Force
+$path = New-Item -Path 'HKCR:\\Directory\shell\vscode\command' -Force
+$path | New-ItemProperty -Name '(default)' -Value "`"$($env:LOCALAPPDATA)\Programs\Microsoft VS Code\Code.exe`" `"%V`"" -PropertyType 'String' -Force
+
+# TaskBar to left and without grouping
+Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "TaskbarAl"        -Value "0" -Type Dword
+Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "TaskbarGlomLevel" -Value "2" -Type Dword
+
+# ALT+TAB-experience without IE-Tab-Switching
+New-Item -Path "HKCU:\Software\Policies\Microsoft\Windows" -Name Explorer
+Set-ItemProperty -Path "HKCU:\Software\Policies\Microsoft\Windows\Explorer" -Name "MultiTaskingAltTabFilter" -Value "4" -Type Dword
+
+# switch back to win10-context menu in explorer
+reg add "HKCU\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\InprocServer32" /f /ve
+
+# enable tree expansion in Explorer when navigating into a folder
+reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /V NavPaneExpandToCurrentFolder /T REG_DWORD /D 00000001 /F
+
+Pop-Location
+Stop-Process -processName: Explorer -force        # This will restart the Explorer service to make this work.
+
+winget install wingetui
+Start-Process "$($env:LOCALAPPDATA)\Programs\WingetUI\wingetui.exe" -wait -ArgumentList "--updateapps"
+

@@ -77,19 +77,6 @@ Install-Font "$($env:TEMP)\fira\ttf" "FiraCode-Regular.ttf"
 Install-Font "$($env:TEMP)\fira\ttf" "FiraCode-Retina.ttf"
 Install-Font "$($env:TEMP)\fira\ttf" "FiraCode-SemiBold.ttf"
 
-# scheduling daily upgrades of all software
-#$existingTask = Get-ScheduledTask -TaskName "WinGet Upgrade --All" -ErrorAction Ignore -WarningAction Ignore
-#if (!$existingTask) {
-#    $action = New-ScheduledTaskAction `
-#        -Execute 'C:\ProgramData\chocolatey\bin\choco.exe' `
-#        -Argument 'upgrade all -y'
-#
-#    $trigger =  New-ScheduledTaskTrigger -Daily -At 12am
-#    Register-ScheduledTask -Action $action -Trigger $trigger -TaskName "Choco Upgrade All" -Description "Upgrade all choco packages"   
-#}  else {
-#    Write-Host "task for auto-update exists"
-#}
-
 winget install Greenshot.Greenshot                # (free) screenshots the way I want them to be
 winget install VideoLAN.VLC                       # (free) the(!) video player
 winget install GIMP.GIMP                          # (free) image editing
@@ -143,11 +130,6 @@ winget install VMware.HorizonClient               # (free) some use this desktop
 winget install icsharpcode.ILSpy                  # (free) Intermediate Language (.NET) Disassembler
 
 #winget install screamingfrog                     # (paid) website SEO spider
-
-#  WinGetUI (https://github.com/marticliment/WingetUI) and start with update
-winget install wingetui
-Start-Process "$($env:LOCALAPPDATA)\Programs\WingetUI\wingetui.exe" -wait -ArgumentList "--updateapps"
-
 # private use
 winget install OBSProject.OBSStudio               # to record screen/cam/...
 winget install Spotify.Spotify                    # (free) need good music - this installer sometimes hangs at the end of the procedure - so I put it last
@@ -209,6 +191,10 @@ reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /V Na
 
 Pop-Location
 Stop-Process -processName: Explorer -force        # This will restart the Explorer service to make this work.
+
+
+winget install wingetui
+Start-Process "$($env:LOCALAPPDATA)\Programs\WingetUI\wingetui.exe" -wait -ArgumentList "--updateapps"
 
 # # configure Cryptomator to use WinFUSE ... TODO: neet to check whether this file exists right after setting up Cryptomator via WinGet
 # $settingsPath = "$($env:APPDATA)\Cryptomator\settings.json"

@@ -48,7 +48,7 @@ function Install-Font {
         
     Write-Output "installing $fontName ...";
     $objShell = New-Object -ComObject Shell.Application
-    $objFolder = $objShell.Namespace(0x14)
+    $objFolder = $objShell.Namespace("C:\Windows\Fonts")
         
     $copyFlag = [String]::Format("{0:x}", 4 + 16);
     $objFolder.CopyHere($fileName, $copyFlag)
@@ -77,19 +77,6 @@ Install-Font "$($env:TEMP)\fira\ttf" "FiraCode-Regular.ttf"
 Install-Font "$($env:TEMP)\fira\ttf" "FiraCode-Retina.ttf"
 Install-Font "$($env:TEMP)\fira\ttf" "FiraCode-SemiBold.ttf"
 
-# scheduling daily upgrades of all software
-$existingTask = Get-ScheduledTask -TaskName "Choco Upgrade All" -ErrorAction Ignore -WarningAction Ignore
-if (!$existingTask) {
-    $action = New-ScheduledTaskAction `
-        -Execute 'C:\ProgramData\chocolatey\bin\choco.exe' `
-        -Argument 'upgrade all -y'
-
-    $trigger =  New-ScheduledTaskTrigger -Daily -At 12am
-    Register-ScheduledTask -Action $action -Trigger $trigger -TaskName "Choco Upgrade All" -Description "Upgrade all choco packages"   
-}  else {
-    Write-Host "task for auto-update exists"
-}
-
 winget install Greenshot.Greenshot                # (free) screenshots the way I want them to be
 winget install VideoLAN.VLC                       # (free) the(!) video player
 winget install GIMP.GIMP                          # (free) image editing
@@ -107,8 +94,12 @@ winget install WinFsp.WinFsp                      # (free) enables FUSE Related 
 winget install Cryptomator.Cryptomator            # (free) need to keep some content secret in the cloud
 
 # software development and business
+winget install Git.Git                            # version control
+
 winget install Microsoft.VisualStudioCode         # Visual Studio Code
 winget install Amazon.Kindle                      # (free) to read your programming books from Amazon
+#winget install zoomit                            # (free) ZoomIt tool from SysInternals
+winget install Microsoft.PowerShell               # (free) open shouce shell
 
 # private use
 winget install OBSProject.OBSStudio               # to record screen/cam/...
@@ -144,6 +135,20 @@ $path = New-Item -Path 'HKCR:\\Directory\shell\vscode' -Force
 $path | New-ItemProperty -Name '(default)' -Value 'Open Folder as VS Code Project' -PropertyType 'String' -Force
 $path = New-Item -Path 'HKCR:\\Directory\shell\vscode\command' -Force
 $path | New-ItemProperty -Name '(default)' -Value "`"$($env:LOCALAPPDATA)\Programs\Microsoft VS Code\Code.exe`" `"%V`"" -PropertyType 'String' -Force
+
+# TaskBar to left and without grouping
+Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "TaskbarAl"        -Value "0" -Type Dword
+Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "TaskbarGlomLevel" -Value "2" -Type Dword
+
+# ALT+TAB-experience without IE-Tab-Switching
+New-Item -Path "HKCU:\Software\Policies\Microsoft\Windows" -Name Explorer
+Set-ItemProperty -Path "HKCU:\Software\Policies\Microsoft\Windows\Explorer" -Name "MultiTaskingAltTabFilter" -Value "4" -Type Dword
+
+# switch back to win10-context menu in explorer
+reg add "HKCU\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\InprocServer32" /f /ve
+
+# enable tree expansion in Explorer when navigating into a folder
+reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /V NavPaneExpandToCurrentFolder /T REG_DWORD /D 00000001 /F
 
 Pop-Location
 Stop-Process -processName: Explorer -force        # This will restart the Explorer service to make this work.
