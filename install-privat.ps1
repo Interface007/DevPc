@@ -150,6 +150,9 @@ Stop-Process -processName: Explorer -force        # This will restart the Explor
 
 winget install Cockos.REAPER                      # (paid) audio recoding and production software
 
+winget install wingetui
+Start-Process "$($env:LOCALAPPDATA)\Programs\WingetUI\wingetui.exe" -wait -ArgumentList "--updateapps"
+
 # # configure Cryptomator to use WinFUSE ... TODO: neet to check whether this file exists right after setting up Cryptomator via WinGet
 # $settingsPath = "$($env:APPDATA)\Cryptomator\settings.json"
 # $settings = Get-Content -Path $settingsPath | ConvertFrom-Json
