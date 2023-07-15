@@ -77,33 +77,35 @@ Install-Font "$($env:TEMP)\fira\ttf" "FiraCode-Regular.ttf"
 Install-Font "$($env:TEMP)\fira\ttf" "FiraCode-Retina.ttf"
 Install-Font "$($env:TEMP)\fira\ttf" "FiraCode-SemiBold.ttf"
 
-winget install Greenshot.Greenshot                # (free) screenshots the way I want them to be
-winget install VideoLAN.VLC                       # (free) the(!) video player
-winget install GIMP.GIMP                          # (free) image editing
-winget install Adobe.Acrobat.Reader.64-bit        # (feee) PDF reader
-winget install 7zip.7zip                          # (free) handles most comression file formats
-winget install JAMSoftware.TreeSize.Free          # (free) analyzes where all the harddisk space has gone
-winget install voidtools.Everything               # (free) filename search
+winget install Greenshot.Greenshot                    --source winget # (free) screenshots the way I want them to be
+winget install VideoLAN.VLC                           --source winget # (free) the(!) video player
+winget install GIMP.GIMP                              --source winget # (free) image editing
+winget install Adobe.Acrobat.Reader.64-bit            --source winget # (feee) PDF reader
+winget install 7zip.7zip                              --source winget # (free) handles most comression file formats
+winget install JAMSoftware.TreeSize.Free              --source winget # (free) analyzes where all the harddisk space has gone
+winget install voidtools.Everything                   --source winget # (free) filename search
 
-winget install Obsidian.Obsidian                  # (freemium) "external brain"
-winget install tailscale.tailscale                # (freemium) point-to-point-VPN
+winget install Obsidian.Obsidian                  	  --source winget # (freemium) "external brain"
+winget install tailscale.tailscale                	  --source winget # (freemium) point-to-point-VPN
 
-winget install Xmind.Xmind                        # (paid) mindmapping
-winget install ScooterSoftware.BeyondCompare4  --locale en-US    # (paid) takes comparison of folders and files to a new level
-winget install WinFsp.WinFsp                      # (free) enables FUSE Related Volume Types for Cryptomator
-winget install Cryptomator.Cryptomator            # (free) need to keep some content secret in the cloud
+winget install Xmind.Xmind                            --source winget # (paid) mindmapping
+winget install ScooterSoftware.BeyondCompare4         --source winget --locale en-US # (paid) takes comparison of folders and files to a new level
+winget install WinFsp.WinFsp                          --source winget # (free) enables FUSE Related Volume Types for Cryptomator
+winget install Cryptomator.Cryptomator                --source winget # (free) need to keep some content secret in the cloud
 
 # software development and business
-winget install Git.Git                            # version control
+winget install Git.Git                                --source winget # version control
 
-winget install Microsoft.VisualStudioCode         # Visual Studio Code
-winget install Amazon.Kindle                      # (free) to read your programming books from Amazon
-#winget install zoomit                            # (free) ZoomIt tool from SysInternals
-winget install Microsoft.PowerShell               # (free) open shouce shell
+
+winget install Microsoft.VisualStudioCode             --source winget # Visual Studio Code
+winget install Amazon.Kindle                          --source winget # (free) to read your programming books from Amazon
+#winget install zoomit                                --source winget # (free) ZoomIt tool from SysInternals
+
+winget install Microsoft.PowerShell                   --source winget # (free) open shouce shell
 
 # private use
-winget install OBSProject.OBSStudio               # to record screen/cam/...
-winget install Spotify.Spotify                    # (free) need good music - this installer sometimes hangs at the end of the procedure - so I put it last
+winget install OBSProject.OBSStudio                   --source winget # to record screen/cam/...
+winget install Spotify.Spotify                        --source winget # (free) need good music - this installer sometimes hangs at the end of the procedure - so I put it last
 
 Push-Location
 

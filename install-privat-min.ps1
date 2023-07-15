@@ -77,20 +77,20 @@ Install-Font "$($env:TEMP)\fira\ttf" "FiraCode-Regular.ttf"
 Install-Font "$($env:TEMP)\fira\ttf" "FiraCode-Retina.ttf"
 Install-Font "$($env:TEMP)\fira\ttf" "FiraCode-SemiBold.ttf"
 
-winget install Greenshot.Greenshot                # (free) screenshots the way I want them to be
-winget install VideoLAN.VLC                       # (free) the(!) video player
-winget install GIMP.GIMP                          # (free) image editing
-winget install Adobe.Acrobat.Reader.64-bit        # (feee) PDF reader
-winget install 7zip.7zip                          # (free) handles most comression file formats
-winget install JAMSoftware.TreeSize.Free          # (free) analyzes where all the harddisk space has gone
-winget install voidtools.Everything               # (free) filename search
+winget install Greenshot.Greenshot              --source winget # (free) screenshots the way I want them to be
+winget install VideoLAN.VLC                     --source winget # (free) the(!) video player
+winget install GIMP.GIMP                        --source winget # (free) image editing
+winget install Adobe.Acrobat.Reader.64-bit      --source winget # (feee) PDF reader
+winget install 7zip.7zip                        --source winget # (free) handles most comression file formats
+winget install JAMSoftware.TreeSize.Free        --source winget # (free) analyzes where all the harddisk space has gone
+winget install voidtools.Everything             --source winget # (free) filename search
 
-winget install Obsidian.Obsidian                  # (freemium) "external brain"
-winget install tailscale.tailscale                # (freemium) point-to-point-VPN
+winget install Obsidian.Obsidian                --source winget # (freemium) "external brain"
+winget install tailscale.tailscale              --source winget # (freemium) point-to-point-VPN
 
-winget install ScooterSoftware.BeyondCompare4  --locale en-US    # (paid) takes comparison of folders and files to a new level
-winget install WinFsp.WinFsp                      # (free) enables FUSE Related Volume Types for Cryptomator
-winget install Cryptomator.Cryptomator            # (free) need to keep some content secret in the cloud
+winget install ScooterSoftware.BeyondCompare4   --source winget --locale en-US # (paid) takes comparison of folders and files to a new level
+winget install WinFsp.WinFsp                    --source winget # (free) enables FUSE Related Volume Types for Cryptomator
+winget install Cryptomator.Cryptomator          --source winget # (free) need to keep some content secret in the cloud
 
 
 Push-Location

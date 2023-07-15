@@ -77,62 +77,62 @@ Install-Font "$($env:TEMP)\fira\ttf" "FiraCode-Regular.ttf"
 Install-Font "$($env:TEMP)\fira\ttf" "FiraCode-Retina.ttf"
 Install-Font "$($env:TEMP)\fira\ttf" "FiraCode-SemiBold.ttf"
 
-winget install Greenshot.Greenshot                # (free) screenshots the way I want them to be
-winget install VideoLAN.VLC                       # (free) the(!) video player
-winget install GIMP.GIMP                          # (free) image editing
-winget install Adobe.Acrobat.Reader.64-bit        # (feee) PDF reader
-winget install 7zip.7zip                          # (free) handles most comression file formats
-winget install JAMSoftware.TreeSize.Free          # (free) analyzes where all the harddisk space has gone
-winget install voidtools.Everything               # (free) filename search
-winget install Telerik.Fiddler.Classic            # (free) debugging proxy for http(s)
+winget install Greenshot.Greenshot                    --source winget # (free) screenshots the way I want them to be
+winget install VideoLAN.VLC                           --source winget # (free) the(!) video player
+winget install GIMP.GIMP                              --source winget # (free) image editing
+winget install Adobe.Acrobat.Reader.64-bit            --source winget # (feee) PDF reader
+winget install 7zip.7zip                              --source winget # (free) handles most comression file formats
+winget install JAMSoftware.TreeSize.Free              --source winget # (free) analyzes where all the harddisk space has gone
+winget install voidtools.Everything                   --source winget # (free) filename search
+winget install Telerik.Fiddler.Classic                --source winget # (free) debugging proxy for http(s)
 
-winget install Obsidian.Obsidian                  # (freemium) "external brain"
-winget install tailscale.tailscale                # (freemium) point-to-point-VPN
+winget install Obsidian.Obsidian                  	  --source winget # (freemium) "external brain"
+winget install tailscale.tailscale                	  --source winget # (freemium) point-to-point-VPN
 
-winget install Xmind.Xmind                        # (paid) mindmapping
-winget install ScooterSoftware.BeyondCompare4  --locale en-US    # (paid) takes comparison of folders and files to a new level
-winget install WinFsp.WinFsp                      # (free) enables FUSE Related Volume Types for Cryptomator
-winget install Cryptomator.Cryptomator            # (free) need to keep some content secret in the cloud
+winget install Xmind.Xmind                            --source winget # (paid) mindmapping
+winget install ScooterSoftware.BeyondCompare4         --source winget --locale en-US # (paid) takes comparison of folders and files to a new level
+winget install WinFsp.WinFsp                          --source winget # (free) enables FUSE Related Volume Types for Cryptomator
+winget install Cryptomator.Cryptomator                --source winget # (free) need to keep some content secret in the cloud
 
 # software development and business
-winget install Git.Git                            # version control
+winget install Git.Git                                --source winget # version control
 
-#winget install dotnet-sdk                        # .NET SDK
+#winget install dotnet-sdk                            --source winget # .NET SDK
 
-winget install Microsoft.VisualStudioCode         # Visual Studio Code
-winget install Microsoft.VisualStudio.2022.Enterprise # Visual Studio 2022 Enterprise - still need to install components via VS installer GUI
-winget install JetBrains.ReSharper                # tooling for efficient C# coding - might be obsolete in the future, but currently it has a lot of great efficiency improvements
+winget install Microsoft.VisualStudioCode             --source winget # Visual Studio Code
+winget install Microsoft.VisualStudio.2022.Enterprise --source winget # Visual Studio 2022 Enterprise - still need to install components via VS installer GUI
+winget install JetBrains.ReSharper                    --source winget # tooling for efficient C# coding - might be obsolete in the future, but currently it has a lot of great efficiency improvements
 
-winget install Microsoft.AzureCLI                 # tooling for Azure
-winget install Microsoft.Azure.FunctionsCoreTools # tooling for AzureFunctions
-winget install Microsoft.Azure.AZCopy.10          # Azure Storage copy 
-winget install Microsoft.Bicep                    # Azure IaC-Tooling for Bicep-definitions
+winget install Microsoft.AzureCLI                     --source winget # tooling for Azure
+winget install Microsoft.Azure.FunctionsCoreTools     --source winget # tooling for AzureFunctions
+winget install Microsoft.Azure.AZCopy.10              --source winget # Azure Storage copy 
+winget install Microsoft.Bicep                        --source winget # Azure IaC-Tooling for Bicep-definitions
 
-winget install Microsoft.PowerAppsCLI             # Microsoft Power Platform CLI
+winget install Microsoft.PowerAppsCLI                 --source winget # Microsoft Power Platform CLI
 
-winget install Microsoft.SQLServerManagementStudio # database development with MS SQL Server 
-winget install Microsoft.AzureDataStudio          # database development with MS Azure Studio
+winget install Microsoft.SQLServerManagementStudio    --source winget # database development with MS SQL Server 
+winget install Microsoft.AzureDataStudio              --source winget # database development with MS Azure Studio
 
-winget install Postman.Postman                    # (free) create and manage REST-API-calls
-winget install Google.Chrome                      # (free) browser based on Chromium
-winget install Mozilla.Firefox                    # (free) browser based on Gecko
-winget install Amazon.Kindle                      # (free) to read your programming books from Amazon
-#winget install zoomit                            # (free) ZoomIt tool from SysInternals
+winget install Postman.Postman                        --source winget # (free) create and manage REST-API-calls
+winget install Google.Chrome                          --source winget # (free) browser based on Chromium
+winget install Mozilla.Firefox                        --source winget # (free) browser based on Gecko
+winget install Amazon.Kindle                          --source winget # (free) to read your programming books from Amazon
+#winget install zoomit                                --source winget # (free) ZoomIt tool from SysInternals
 
-winget install OpenJS.NodeJS                      # (free) Node.js - open-source, cross-platform, back-end JavaScript runtime environment
-winget install Microsoft.PowerShell               # (free) open shouce shell
-#winget install az.powershell                     # Azure PowerShell
-winget install Docker.DockerDesktop               # Docker Desktop
-winget install WiresharkFoundation.Wireshark      # WireShark network analyzer
+winget install OpenJS.NodeJS                          --source winget # (free) Node.js - open-source, cross-platform, back-end JavaScript runtime environment
+winget install Microsoft.PowerShell                   --source winget # (free) open shouce shell
+#winget install az.powershell                         --source winget # Azure PowerShell
+winget install Docker.DockerDesktop                   --source winget # Docker Desktop
+winget install WiresharkFoundation.Wireshark          --source winget # WireShark network analyzer
 
-winget install Citrix.Workspace                   # (free) needed for some remote work scenarios
-winget install VMware.HorizonClient               # (free) some use this desktop virtualization
-winget install icsharpcode.ILSpy                  # (free) Intermediate Language (.NET) Disassembler
+winget install Citrix.Workspace                       --source winget # (free) needed for some remote work scenarios
+winget install VMware.HorizonClient                   --source winget # (free) some use this desktop virtualization
+winget install icsharpcode.ILSpy                      --source winget # (free) Intermediate Language (.NET) Disassembler
 
-#winget install screamingfrog                     # (paid) website SEO spider
+#winget install screamingfrog                         --source winget # (paid) website SEO spider
 # private use
-winget install OBSProject.OBSStudio               # to record screen/cam/...
-winget install Spotify.Spotify                    # (free) need good music - this installer sometimes hangs at the end of the procedure - so I put it last
+winget install OBSProject.OBSStudio                   --source winget # to record screen/cam/...
+winget install Spotify.Spotify                        --source winget # (free) need good music - this installer sometimes hangs at the end of the procedure - so I put it last
 
 Push-Location
 
