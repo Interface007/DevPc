@@ -195,6 +195,12 @@ Stop-Process -processName: Explorer -force        # This will restart the Explor
 # update WSL when needed - Docker needs newer than some installation processes of Windows 11 do install.
 Start-Process wsl --update
 
+# install Hyper-V as a Windows feature
+Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Hyper-V -All -NoRestart
+
+# Apply the Secure Boot UEFI Forbidden List (DBX)  and the Code Integrity Boot Policy for kb5025885
+reg add HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Secureboot /v AvailableUpdates /t REG_DWORD /d 0x30 /f
+
 winget install wingetui
 Start-Process "$($env:LOCALAPPDATA)\Programs\WingetUI\wingetui.exe" -wait -ArgumentList "--updateapps"
 
