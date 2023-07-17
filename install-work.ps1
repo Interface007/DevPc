@@ -192,6 +192,8 @@ reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /V Na
 Pop-Location
 Stop-Process -processName: Explorer -force        # This will restart the Explorer service to make this work.
 
+# update WSL when needed - Docker needs newer than some installation processes of Windows 11 do install.
+Start-Process wsl --update
 
 winget install wingetui
 Start-Process "$($env:LOCALAPPDATA)\Programs\WingetUI\wingetui.exe" -wait -ArgumentList "--updateapps"
