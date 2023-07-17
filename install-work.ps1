@@ -162,7 +162,7 @@ $path | New-ItemProperty -Name 'Icon' -Value "`"$($env:LOCALAPPDATA)\Programs\Mi
 $path = New-Item -Path 'HKCR:\*\shell\Open with VS Code\command' -Force
 $path | New-ItemProperty -Name '(default)' -Value "`"$($env:LOCALAPPDATA)\Programs\Microsoft VS Code\Code.exe`" `"%1`"" -PropertyType 'String' -Force
 
-# This will make it appear when you right click ON a folder
+# This will make it appear when you right-click ON a folder
 $path = New-Item -Path 'HKCR:\Directory\shell\vscode' -Force
 $path | New-ItemProperty -Name '(default)' -Value 'Open Folder as VS Code Project' -PropertyType 'String' -Force
 $path = New-Item -Path 'HKCR:\Directory\shell\vscode\command' -Force
@@ -192,19 +192,22 @@ reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /V Na
 Pop-Location
 Stop-Process -processName: Explorer -force        # This will restart the Explorer service to make this work.
 
-# update WSL when needed - Docker needs newer than some installation processes of Windows 11 do install.
+# update WSL when needed - Docker needs to be newer than some installation processes of Windows 11 do install.
 Start-Process wsl --update
 
 # install Hyper-V as a Windows feature
 Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Hyper-V -All -NoRestart
 
-# Apply the Secure Boot UEFI Forbidden List (DBX)  and the Code Integrity Boot Policy for kb5025885
+# create a virtual switch for ethernet sharing:
+New-VMSwitch -Name "vEthernet" -NetAdapterName Ethernet -AllowManagementOS:$true
+
+# Apply the Secure Boot UEFI Forbidden List (DBX) and the Code Integrity Boot Policy for kb5025885
 reg add HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Secureboot /v AvailableUpdates /t REG_DWORD /d 0x30 /f
 
 winget install wingetui
 Start-Process "$($env:LOCALAPPDATA)\Programs\WingetUI\wingetui.exe" -wait -ArgumentList "--updateapps"
 
-# # configure Cryptomator to use WinFUSE ... TODO: neet to check whether this file exists right after setting up Cryptomator via WinGet
+# # configure Cryptomator to use WinFUSE ... TODO: need to check whether this file exists right after setting up Cryptomator via WinGet
 # $settingsPath = "$($env:APPDATA)\Cryptomator\settings.json"
 # $settings = Get-Content -Path $settingsPath | ConvertFrom-Json
 # $settings.mountService = "org.cryptomator.frontend.fuse.mount.WinFspMountProvider"
