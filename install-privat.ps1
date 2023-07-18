@@ -128,13 +128,13 @@ New-PSDrive -Name HKCR -PSProvider Registry -Root HKEY_CLASSES_ROOT
 $path = New-Item -Path 'HKCR:\*\shell\Open with VS Code' -Force
 $path | New-ItemProperty -Name '(default)' -Value 'Edit with VS Code' -PropertyType 'String' -Force
 $path | New-ItemProperty -Name 'Icon' -Value "`"$($env:LOCALAPPDATA)\Programs\Microsoft VS Code\Code.exe`",0" -PropertyType 'String' -Force
-$path = New-Item -Path 'HKCR:\\*\shell\Open with VS Code\command' -Force
+$path = New-Item -Path 'HKCR:\*\shell\Open with VS Code\command' -Force
 $path | New-ItemProperty -Name '(default)' -Value "`"$($env:LOCALAPPDATA)\Programs\Microsoft VS Code\Code.exe`" `"%1`"" -PropertyType 'String' -Force
 
-# This will make it appear when you right click ON a folder
-$path = New-Item -Path 'HKCR:\\Directory\shell\vscode' -Force
+# This will make it appear when you right-click ON a folder
+$path = New-Item -Path 'HKCR:\Directory\shell\vscode' -Force
 $path | New-ItemProperty -Name '(default)' -Value 'Open Folder as VS Code Project' -PropertyType 'String' -Force
-$path = New-Item -Path 'HKCR:\\Directory\shell\vscode\command' -Force
+$path = New-Item -Path 'HKCR:\Directory\shell\vscode\command' -Force
 $path | New-ItemProperty -Name '(default)' -Value "`"$($env:LOCALAPPDATA)\Programs\Microsoft VS Code\Code.exe`" `"%V`"" -PropertyType 'String' -Force
 
 # TaskBar to left and without grouping
@@ -159,7 +159,7 @@ winget install -e --id Cockos.REAPER                      # (paid) audio recodin
 winget install wingetui
 Start-Process "$($env:LOCALAPPDATA)\Programs\WingetUI\wingetui.exe" -wait -ArgumentList "--updateapps"
 
-# # configure Cryptomator to use WinFUSE ... TODO: neet to check whether this file exists right after setting up Cryptomator via WinGet
+# # configure Cryptomator to use WinFUSE ... TODO: need to check whether this file exists right after setting up Cryptomator via WinGet
 # $settingsPath = "$($env:APPDATA)\Cryptomator\settings.json"
 # $settings = Get-Content -Path $settingsPath | ConvertFrom-Json
 # $settings.mountService = "org.cryptomator.frontend.fuse.mount.WinFspMountProvider"
