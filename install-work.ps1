@@ -41,7 +41,8 @@ function Install-Font {
       $fileName = "$env:temp\$fontName"
       Invoke-WebRequest -Uri "$fontUrl/$fontName" -OutFile $fileName
       Write-Output "... downloaded $fontName";
-    } ELSE {
+    }
+    ELSE {
       $fileName = "$fontUrl/$fontName"
     }
         
@@ -180,13 +181,19 @@ Set-ItemProperty -Path "HKCU:\Software\Policies\Microsoft\Windows\Explorer" -Nam
 #$path | New-ItemProperty -Name 'AltTabSettings' -Value 1 -PropertyType 'DWORD' -Force
 
 $path = New-Item -Path 'HKCU:\hive\Control Panel\Desktop' -Force
-$path | New-ItemProperty -Name UserPreferencesMask -Value  ([byte[]](0x9E,0x5E,0x07,0x80,0x12,0x00,0x00,0x00)) -PropertyType Binary -Force
+$path | New-ItemProperty -Name UserPreferencesMask -Value  ([byte[]](0x9E, 0x5E, 0x07, 0x80, 0x12, 0x00, 0x00, 0x00)) -PropertyType Binary -Force
 
 # switch back to win10-context menu in explorer
 reg add "HKCU\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\InprocServer32" /f /ve
 
 # enable tree expansion in Explorer when navigating into a folder
 reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /V NavPaneExpandToCurrentFolder /T REG_DWORD /D 00000001 /F
+
+# Remove Microsoft Store from the taskbar (english and german language)
+$appname = "Microsoft Store"
+((New-Object -Com Shell.Application).NameSpace('shell:::{4234d49b-0245-4df3-b780-3893943456e1}').Items() | Where-Object { $_.Name -eq $appname }).Verbs() `
+| Where-Object { $_.Name.replace('&', '') -match 'Unpin from taskbar' -or $_.Name.replace('&','') -match 'Von Taskleiste lösen'} `
+| ForEach-Object { $_.DoIt(); $exec = $true }
 
 Pop-Location
 Stop-Process -processName: Explorer -force        # This will restart the Explorer service to make this work.
