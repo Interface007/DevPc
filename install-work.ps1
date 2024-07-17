@@ -33,8 +33,6 @@ function Install-Font {
     $fontUrl,
     $fontName
   )
-
-  # install "Redacted Regular + Script" - unfortunately, this is not available through Chocolatey
   If ((Test-Path "C:\Windows\Fonts\$fontName") -ne $True -and (Test-Path "$($env:LOCALAPPDATA)\Microsoft\Windows\Fonts\$fontName") -ne $True) {
     IF ($fontUrl -like 'http*') {
       Write-Output "downloading $fontName";
@@ -45,15 +43,11 @@ function Install-Font {
     ELSE {
       $fileName = "$fontUrl/$fontName"
     }
-        
-    Write-Output "installing $fontName ...";
+
     $objShell = New-Object -ComObject Shell.Application
-    $objFolder = $objShell.Namespace("C:\Windows\Fonts")
-        
-    $copyFlag = [String]::Format("{0:x}", 4 + 16);
-    $objFolder.CopyHere($fileName, $copyFlag)
-        
-    Remove-Item $fileName
+    $Fonts = $objShell.NameSpace(20)
+    $Fonts.CopyHere($fileName, 0x14)
+ 
     Write-Output "... finished installing $fontName";
   }
   else {
