@@ -33,27 +33,21 @@ function Install-Font {
     $fontUrl,
     $fontName
   )
-
-  # install "Redacted Regular + Script" - unfortunately, this is not available through Chocolatey
-  If ((Test-Path "C:\Windows\Fonts\$fontName") -ne $True) {
-    if ($fontUrl -like 'http*') {
+  If ((Test-Path "C:\Windows\Fonts\$fontName") -ne $True -and (Test-Path "$($env:LOCALAPPDATA)\Microsoft\Windows\Fonts\$fontName") -ne $True) {
+    IF ($fontUrl -like 'http*') {
       Write-Output "downloading $fontName";
       $fileName = "$env:temp\$fontName"
       Invoke-WebRequest -Uri "$fontUrl/$fontName" -OutFile $fileName
       Write-Output "... downloaded $fontName";
     }
-    else {
+    ELSE {
       $fileName = "$fontUrl/$fontName"
     }
-        
-    Write-Output "installing $fontName ...";
+
     $objShell = New-Object -ComObject Shell.Application
-    $objFolder = $objShell.Namespace("C:\Windows\Fonts")
-        
-    $copyFlag = [String]::Format("{0:x}", 4 + 16);
-    $objFolder.CopyHere($fileName, $copyFlag)
-        
-    Remove-Item $fileName
+    $Fonts = $objShell.NameSpace(20)
+    $Fonts.CopyHere($fileName, 0x14)
+ 
     Write-Output "... finished installing $fontName";
   }
   else {
@@ -69,7 +63,7 @@ Install-Font "https://github.com/google/fonts/raw/main/ofl/redactedscript" "Reda
 
 # Fira Code is a great font for developers
 Invoke-WebRequest -Uri "https://github.com/tonsky/FiraCode/releases/download/6.2/Fira_Code_v6.2.zip" -OutFile "$($env:TEMP)\fira.zip"
-Expand-Archive "$($env:TEMP)\fira.zip" -DestinationPath "$($env:TEMP)\fira"
+Expand-Archive "$($env:TEMP)\fira.zip" -DestinationPath "$($env:TEMP)\fira" -Force
 Install-Font "$($env:TEMP)\fira\ttf" "FiraCode-Bold.ttf"
 Install-Font "$($env:TEMP)\fira\ttf" "FiraCode-Light.ttf"
 Install-Font "$($env:TEMP)\fira\ttf" "FiraCode-Medium.ttf"
@@ -86,8 +80,8 @@ winget install -e --id JAMSoftware.TreeSize.Free              --source winget # 
 winget install -e --id voidtools.Everything                   --source winget # (free) filename search
 winget install -e --id Telerik.Fiddler.Classic                --source winget # (free) debugging proxy for http(s)
 
-winget install -e --id Obsidian.Obsidian                  	  --source winget # (freemium) "external brain"
-winget install -e --id tailscale.tailscale                	  --source winget # (freemium) point-to-point-VPN
+winget install -e --id Obsidian.Obsidian                      --source winget # (freemium) "external brain"
+winget install -e --id tailscale.tailscale                    --source winget # (freemium) point-to-point-VPN
 
 winget install -e --id Xmind.Xmind                            --source winget # (paid) mindmapping
 winget install -e --id ScooterSoftware.BeyondCompare4         --source winget --locale en-US # (paid) takes comparison of folders and files to a new level
@@ -162,7 +156,7 @@ $path | New-ItemProperty -Name 'Icon' -Value "`"$($env:LOCALAPPDATA)\Programs\Mi
 $path = New-Item -Path 'HKCR:\*\shell\Open with VS Code\command' -Force
 $path | New-ItemProperty -Name '(default)' -Value "`"$($env:LOCALAPPDATA)\Programs\Microsoft VS Code\Code.exe`" `"%1`"" -PropertyType 'String' -Force
 
-# This will make it appear when you right click ON a folder
+# This will make it appear when you right-click ON a folder
 $path = New-Item -Path 'HKCR:\Directory\shell\vscode' -Force
 $path | New-ItemProperty -Name '(default)' -Value 'Open Folder as VS Code Project' -PropertyType 'String' -Force
 $path = New-Item -Path 'HKCR:\Directory\shell\vscode\command' -Force
@@ -181,7 +175,7 @@ Set-ItemProperty -Path "HKCU:\Software\Policies\Microsoft\Windows\Explorer" -Nam
 #$path | New-ItemProperty -Name 'AltTabSettings' -Value 1 -PropertyType 'DWORD' -Force
 
 $path = New-Item -Path 'HKCU:\hive\Control Panel\Desktop' -Force
-$path | New-ItemProperty -Name UserPreferencesMask -Value  ([byte[]](0x9E,0x5E,0x07,0x80,0x12,0x00,0x00,0x00)) -PropertyType Binary -Force
+$path | New-ItemProperty -Name UserPreferencesMask -Value  ([byte[]](0x9E, 0x5E, 0x07, 0x80, 0x12, 0x00, 0x00, 0x00)) -PropertyType Binary -Force
 
 # switch back to win10-context menu in explorer
 reg add "HKCU\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\InprocServer32" /f /ve
@@ -189,14 +183,31 @@ reg add "HKCU\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\Inpr
 # enable tree expansion in Explorer when navigating into a folder
 reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /V NavPaneExpandToCurrentFolder /T REG_DWORD /D 00000001 /F
 
+# Remove Microsoft Store from the taskbar (english and german language)
+$appname = "Microsoft Store"
+((New-Object -Com Shell.Application).NameSpace('shell:::{4234d49b-0245-4df3-b780-3893943456e1}').Items() | Where-Object { $_.Name -eq $appname }).Verbs() `
+| Where-Object { $_.Name.replace('&', '') -match 'Unpin from taskbar' -or $_.Name.replace('&','') -match 'Von Taskleiste lösen'} `
+| ForEach-Object { $_.DoIt(); $exec = $true }
+
 Pop-Location
 Stop-Process -processName: Explorer -force        # This will restart the Explorer service to make this work.
 
+# update WSL when needed - Docker needs to be newer than some installation processes of Windows 11 do install.
+Start-Process wsl --update
+
+# install Hyper-V as a Windows feature
+Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Hyper-V -All -NoRestart
+
+# create a virtual switch for ethernet sharing:
+New-VMSwitch -Name "vEthernet" -NetAdapterName Ethernet -AllowManagementOS:$true
+
+# Apply the Secure Boot UEFI Forbidden List (DBX) and the Code Integrity Boot Policy for kb5025885
+reg add HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Secureboot /v AvailableUpdates /t REG_DWORD /d 0x30 /f
 
 winget install wingetui
 Start-Process "$($env:LOCALAPPDATA)\Programs\WingetUI\wingetui.exe" -wait -ArgumentList "--updateapps"
 
-# # configure Cryptomator to use WinFUSE ... TODO: neet to check whether this file exists right after setting up Cryptomator via WinGet
+# # configure Cryptomator to use WinFUSE ... TODO: need to check whether this file exists right after setting up Cryptomator via WinGet
 # $settingsPath = "$($env:APPDATA)\Cryptomator\settings.json"
 # $settings = Get-Content -Path $settingsPath | ConvertFrom-Json
 # $settings.mountService = "org.cryptomator.frontend.fuse.mount.WinFspMountProvider"
