@@ -85,7 +85,6 @@ winget install -e --id 7zip.7zip                              --source winget # 
 winget install -e --id JAMSoftware.TreeSize.Free              --source winget # (free) analyzes where all the harddisk space has gone
 winget install -e --id voidtools.Everything                   --source winget # (free) filename search
 
-winget install -e --id Obsidian.Obsidian                      --source winget # (freemium) "external brain"
 winget install -e --id tailscale.tailscale                    --source winget # (freemium) point-to-point-VPN
 
 winget install -e --id ScooterSoftware.BeyondCompare4         --source winget --locale en-US # (paid) takes comparison of folders and files to a new level
