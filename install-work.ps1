@@ -83,8 +83,8 @@ winget install -e --id Telerik.Fiddler.Classic                --source winget # 
 winget install -e --id Obsidian.Obsidian                      --source winget # (freemium) "external brain"
 winget install -e --id tailscale.tailscale                    --source winget # (freemium) point-to-point-VPN
 
-winget install -e --id Xmind.Xmind                            --source winget # (paid) mindmapping
-winget install -e --id ScooterSoftware.BeyondCompare4         --source winget --locale en-US # (paid) takes comparison of folders and files to a new level
+# winget install -e --id Xmind.Xmind                            --source winget # (paid) mindmapping
+winget install -e --id ScooterSoftware.BeyondCompare5         --source winget --locale en-US # (paid) takes comparison of folders and files to a new level
 winget install -e --id WinFsp.WinFsp                          --source winget # (free) enables FUSE Related Volume Types for Cryptomator
 winget install -e --id Cryptomator.Cryptomator                --source winget # (free) need to keep some content secret in the cloud
 
@@ -108,16 +108,16 @@ winget install -e --id Microsoft.SQLServerManagementStudio    --source winget # 
 winget install -e --id Microsoft.AzureDataStudio              --source winget # database development with MS Azure Studio
 
 winget install -e --id Postman.Postman                        --source winget # (free) create and manage REST-API-calls
-winget install -e --id Google.Chrome                          --source winget # (free) browser based on Chromium
-winget install -e --id Mozilla.Firefox                        --source winget # (free) browser based on Gecko
-winget install -e --id Amazon.Kindle                          --source winget # (free) to read your programming books from Amazon
-#winget install -e --id zoomit                                --source winget # (free) ZoomIt tool from SysInternals
+# winget install -e --id Google.Chrome                          --source winget # (free) browser based on Chromium
+# winget install -e --id Mozilla.Firefox                        --source winget # (free) browser based on Gecko
+# winget install -e --id Amazon.Kindle                          --source winget # (free) to read your programming books from Amazon
+# winget install -e --id zoomit                                --source winget # (free) ZoomIt tool from SysInternals
 
 winget install -e --id OpenJS.NodeJS                          --source winget # (free) Node.js - open-source, cross-platform, back-end JavaScript runtime environment
 winget install -e --id Microsoft.PowerShell                   --source winget # (free) open shouce shell
-#winget install -e --id az.powershell                         --source winget # Azure PowerShell
-winget install -e --id Docker.DockerDesktop                   --source winget # Docker Desktop
-winget install -e --id WiresharkFoundation.Wireshark          --source winget # WireShark network analyzer
+# winget install -e --id az.powershell                         --source winget # Azure PowerShell
+# winget install -e --id Docker.DockerDesktop                   --source winget # Docker Desktop
+# winget install -e --id WiresharkFoundation.Wireshark          --source winget # WireShark network analyzer
 
 winget install -e --id Citrix.Workspace                       --source winget # (free) needed for some remote work scenarios
 winget install -e --id VMware.HorizonClient                   --source winget # (free) some use this desktop virtualization
@@ -145,9 +145,6 @@ Set-ItemProperty -Path "HKCU:\\Software\Microsoft\Windows\CurrentVersion\Search"
 Set-ItemProperty -Path "HKCU:\\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "TaskbarMn" -Value 0 -Type "DWord"
 Set-ItemProperty -Path "HKLM:\\SOFTWARE\Policies\Microsoft\Windows\Windows Chat" -Name "ChatIcon" -Value 3 -Type "DWord"
 
-# because IP filters in "Conditional Access" do need IPv4, we deactivate IPv6 for all networks
-Disable-NetAdapterBinding -Name "*" -ComponentID ms_tcpip6
-
 # Open files
 New-PSDrive -Name HKCR -PSProvider Registry -Root HKEY_CLASSES_ROOT
 $path = New-Item -Path 'HKCR:\*\shell\Open with VS Code' -Force
@@ -171,8 +168,8 @@ New-Item -Path "HKCU:\Software\Policies\Microsoft\Windows" -Name Explorer
 Set-ItemProperty -Path "HKCU:\Software\Policies\Microsoft\Windows\Explorer" -Name "MultiTaskingAltTabFilter" -Value "4" -Type Dword
 
 ## very Old ALT-TAB behavior
-#$path = Get-Item -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer' -Force
-#$path | New-ItemProperty -Name 'AltTabSettings' -Value 1 -PropertyType 'DWORD' -Force
+# $path = Get-Item -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer' -Force
+# $path | New-ItemProperty -Name 'AltTabSettings' -Value 1 -PropertyType 'DWORD' -Force
 
 $path = New-Item -Path 'HKCU:\hive\Control Panel\Desktop' -Force
 $path | New-ItemProperty -Name UserPreferencesMask -Value  ([byte[]](0x9E, 0x5E, 0x07, 0x80, 0x12, 0x00, 0x00, 0x00)) -PropertyType Binary -Force
@@ -199,13 +196,13 @@ Start-Process wsl --update
 Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Hyper-V -All -NoRestart
 
 # create a virtual switch for ethernet sharing:
-New-VMSwitch -Name "vEthernet" -NetAdapterName Ethernet -AllowManagementOS:$true
+# New-VMSwitch -Name "vEthernet" -NetAdapterName Ethernet -AllowManagementOS:$true
 
 # Apply the Secure Boot UEFI Forbidden List (DBX) and the Code Integrity Boot Policy for kb5025885
-reg add HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Secureboot /v AvailableUpdates /t REG_DWORD /d 0x30 /f
+# reg add HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Secureboot /v AvailableUpdates /t REG_DWORD /d 0x30 /f
 
-winget install wingetui
-Start-Process "$($env:LOCALAPPDATA)\Programs\WingetUI\wingetui.exe" -wait -ArgumentList "--updateapps"
+# winget install wingetui
+# Start-Process "$($env:LOCALAPPDATA)\Programs\WingetUI\wingetui.exe" -wait -ArgumentList "--updateapps"
 
 # # configure Cryptomator to use WinFUSE ... TODO: need to check whether this file exists right after setting up Cryptomator via WinGet
 # $settingsPath = "$($env:APPDATA)\Cryptomator\settings.json"
